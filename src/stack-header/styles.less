@@ -1,0 +1,66 @@
+@import '../styles/variables.less';
+
+header{
+  height: 50px;
+  background: @gray-darker;
+  color: @gray-primary;
+  text-align: center;
+  line-height: 50px;
+  position: relative;
+}
+
+.logo{
+  width: 200px;
+  height: 50px;
+  position: absolute;
+  padding-left: 65px;
+  text-align: left;
+  color: white;
+  left: 20px;
+  svg{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: 10px;
+  }
+
+}
+
+.stack-open{
+  display: inline-block;
+  margin-left: 6px;
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 6px solid @gray-primary;
+}
+
+.stack-name{
+  cursor: pointer;
+}
+
+.stack-list{
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  margin-top: 1px;
+  width: 200px;
+  background: fade(@gray-darker,95%);
+  color: @gray-primary;
+  left: 50%;
+  margin-left: -100px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.stack-list-item{
+  cursor: pointer;
+  text-align: center;
+  list-style: none;
+  > a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+}

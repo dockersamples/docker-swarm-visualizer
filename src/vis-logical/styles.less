@@ -1,0 +1,56 @@
+@import '../styles/variables.less';
+
+#vis-logical{
+  z-index: 1;
+  overflow:hidden;
+  .link {
+    stroke: @state-1;
+    stroke-width: 3px;
+  }
+
+  .service {
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+  }
+  .service.dragging {
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+  }
+
+  .service text {
+    fill: white;
+    font-size: 11px;
+  }
+  .service circle {
+    fill: @gray-primary;
+    stroke: @gray-darker;
+    stroke-width: 3px;
+  }
+  .service tspan{
+    text-anchor: middle;
+  }
+
+  .service-running circle{
+    stroke: @state-1;
+    fill: darken(@state-1,10%);
+  }
+  .service-not-running circle{
+    stroke: @state-0;
+    fill: darken(@state-0,20%);
+  }
+  .service-stopped circle{
+    stroke: @state-3;
+    fill: darken(@state-3,25%);
+  }
+  .service-terminated circle{
+    stroke: @state-4;
+    fill: darken(@state-4,10%);
+  }
+
+  .service-partly-running circle{}
+  .service-starting circle{}
+  .service-scaling circle{}
+  .service-redeploying circle{}
+  .service-stopping circle{}
+  .service-terminating circle{}
+}

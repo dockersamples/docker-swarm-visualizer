@@ -1,0 +1,178 @@
+@import '../styles/variables';
+
+.clear(){
+  &:after {
+    display: table;
+    clear: both;
+    content: " ";
+  }
+}
+
+.status(){
+  &:before{
+    display: inline-block;
+    margin-right: 4px;
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: @gray-lighter;
+    border-radius: 50%;
+  }
+
+  &[data-state='byon']:before{
+      height: 0;
+      width: 0;
+      margin: 0;
+    }
+
+   &[data-state='animals']:before{
+    background: @state-1;
+  }
+   &[data-state='movies']:before{
+    background: @state-2;
+  }
+  &[data-state='deployed']:before{
+    background: @state-1;
+  }
+  &[data-state='deploying']:before{
+    background: fade(@state-1,25%);
+  }
+  &[data-state='partly-deployed']:before{
+    background: @state-2;
+  }
+  &[data-state='down']:before{
+    background: @red;
+  }
+  &[data-state='ready']:before{
+    background: @green;
+  }
+
+  &[data-state='terminated']:before,
+  &[data-state='empty-cluster']:before{
+    background: @state-2;
+  }
+}
+
+#vis-physical{
+  text-align: center;
+  max-width: 90%;
+  margin: 0 auto;
+  color: @gray-primary;
+
+  .node-cluster {
+    float: left;
+    padding: 15px;
+    min-width: 80px;
+    .clear();
+
+  }
+
+  .node{
+    float: left;
+    width: 200px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    &:last-child{
+      margin-right: 0;
+    }
+  }
+
+  .node-meta{
+    line-height: 2;
+    font-size: 12pt;
+    text-align: center;
+    text-indent: -3px;
+    padding-bottom:10px;
+    .status();
+    &:before{
+      position: relative;
+      top: -1px;
+    }
+  }
+
+  .node-content{
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column-reverse;
+    background: @gray-darkerr;
+    border: 2px solid lighten(@gray-darker,8%);
+    height: 500px;
+    .clear();
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+
+  .container {
+    height: 152px;
+    margin-bottom: 10px;
+
+    border-radius: 3px;
+    border: 2px solid white;
+    font-size: 10px;
+    cursor: pointer;
+    line-height: 24px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    &[data-state='running']{
+      border-color: @state-1;
+      background-color: fade(@state-1,40%);
+
+    }
+    &.foreign{
+      border-color: fade(@gray-primary,30%);
+      background-color: fade(@gray-primary,25%) !important;
+    }
+    &[tag='indent']{
+      border-color: fade(@state-1,30%);
+      background-color: fade(@state-1,10%) !important;
+    }
+    &[tag='movies']{
+      border-color: fade(@state-2,30%);
+      background-color: fade(@state-2,10%) !important;
+    }
+
+  }
+
+  .node-cluster-content {
+    background: @gray-darker;
+    border: 2px solid lighten(@gray-darker,8%);
+    padding: 15px;
+    .clear();
+  }
+  .node-cluster-content:empty {
+     display: none;
+  }
+
+  .node-cluster-meta{
+    .clear();
+    span{
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+    .name{
+      .status();
+      font-size: 22px;
+      line-height: 30px;
+      &:before{
+        width: 12px;
+        height: 12px;
+        margin-right: 10px;
+      }
+    }
+
+    .state{
+      clear:both;
+    }
+    .state{
+      .status();
+    }
+  }
+  .node-cluster.byon .node-cluster-meta span:not(.name){
+    display: none;
+  }
+}
+

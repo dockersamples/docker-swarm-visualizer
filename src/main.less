@@ -1,0 +1,39 @@
+@import './styles/variables.less';
+
+* {
+  box-sizing: border-box;
+}
+
+html,body{
+  font-family: @font-family;
+  background: @gray-darkerr;
+  overflow-x: hidden;
+}
+
+.tabs{
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid @gray-darker;
+}
+
+.tabs-wrapper{
+  text-align: center;
+  margin-left:auto;
+}
+
+.tabs button{
+  height: 10px;
+  background: none;
+  outline: none;
+  border:none;
+  > svg{fill: @gray-lighterr;}
+  &.hidden {
+    display: inline;
+    > svg{fill: @gray-darker;}
+  }
+}
+#app {
+  margin: 0 auto;
+  width: 60%;
+}

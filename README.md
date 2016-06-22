@@ -1,3 +1,7 @@
-# Docker Swarm Visualizer
-A visualizer for Docker Swarm using the Docker Remote API, Node.JS, and D3
-Originally written for DockerCon EU 2015 to visualize Tutum clusters by the Tutum team. Re-written for DockerCon 2016 to visualize Docker Swarm. Still hacky, but will work on fleshing it out.
+# Tutum Visualizer
+
+[![Deploy to Tutum](https://s.tutum.co/deploy-to-tutum.svg)](https://dashboard.tutum.co/stack/deploy/)
+
+Demo container that displays services on a diagram
+
+

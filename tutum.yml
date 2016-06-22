@@ -1,0 +1,9 @@
+visualizer:
+  image: "tutum/visualizer:master"
+  environment:
+    - VISUALIZER_SHOW=false
+  ports:
+    - "80:80"
+  roles:
+    - global
+  autoredeploy: true
