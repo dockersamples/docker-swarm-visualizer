@@ -13,3 +13,5 @@ TODO:
 * Comment much more extensively
 * Create tests and make them work better
 * Make CSS more elastic. Currently optimized for 3 nodes on a big screen
+
+
