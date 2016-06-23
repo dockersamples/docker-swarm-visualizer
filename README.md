@@ -7,6 +7,10 @@ Occasionally the Remote API will return incomplete data, for instance the node c
 
 To run: docker run -it -d -p 8080:8080 -e HOST=[YOURHOST] -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer
 
+Here's a sample with one node:
+
+<img src="sample.png">
+
 TODO:
 * Take out or fix how dist works
 * Comment much more extensively
