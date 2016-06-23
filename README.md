@@ -9,7 +9,7 @@ To run: docker run -it -d -p 8080:8080 -e HOST=[YOURHOST] -v /var/run/docker.soc
 
 Here's a sample with one node:
 
-<img src="sample.png">
+![Sample image of one node](./samplenode.png)
 
 TODO:
 * Take out or fix how dist works
