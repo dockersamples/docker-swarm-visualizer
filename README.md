@@ -7,6 +7,8 @@ Occasionally the Remote API will return incomplete data, for instance the node c
 
 To run: docker run -it -d -p 8080:8080 -e HOST=[YOURHOST] -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer
 
+If port 8080 is already in use on your host, you can specify e.g. `-p 5000:5000 -e HOST=[YOURHOST] -e PORT=5000` instead.
+
 Here's a sample with one node:
 
 ![Sample image of one node](./samplenode.png)
