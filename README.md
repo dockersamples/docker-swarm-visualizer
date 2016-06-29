@@ -11,6 +11,10 @@ If port 8080 is already in use on your host, you can specify e.g. `-p [YOURPORT]
 
 Example: `docker run -it -d -p 5000:5000 -e HOST=localhost -e PORT=5000 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer`
 
+In some cases, you need to run the docker with your master node hostname instead the IP
+
+Example: `docker run -it -d -p 5000:5000 -e HOST=node-master -e PORT=5000 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer`
+
 Here's a sample with one node:
 
 ![Sample image of one node](./samplenode.png)
