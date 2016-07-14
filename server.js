@@ -29,17 +29,36 @@ app.get('/', function(req, res) {
   res.send(indexData);
 });
 
+console.log(process.env.DOCKER_HOST)
+
+  if(process.env.DOCKER_HOST) {
+     try {
+	   dh = process.env.DOCKER_HOST.split(":");
+	   var docker_host = dh[0]; 
+	   var docker_port = dh[1];
+     } 
+	 catch (err) {
+	   console.log(err.stack)
+     }
+	}
   var wss = new WebSocketServer({server: server});
   
   app.get('/apis/*', function(req, response) {
       var path = req.params[0];
       var jsonData={};
+      var options = {
+		  path: ('/' + path),
+		  method: 'GET'
+	  }
 
-        var options = {
-        socketPath: "/var/run/docker.sock",
-        path: ('/' + path),
-        method: 'GET'
-      };
+    if(docker_host) {
+        options.host = docker_host;
+		    options.port = docker_port;
+	  }
+	  else {
+		    options.socketPath = '/var/run/docker.sock';
+    }
+
     var req = http.request(options, (res) => {
       var data = '';
       res.on('data', (chunk) => {
