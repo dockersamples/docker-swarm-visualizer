@@ -57,29 +57,3 @@ app.get('/', function(req, res) {
       req.end();
 
   });
-
-// wss.on('connection',function connection(ws){
-//     //   var jsonData={};
-//     //   var options = {
-//     //     socketPath: "/var/run/docker.sock",
-//     //     path: ('/events'),
-//     //     method: 'GET'
-//     //   };
-//     // var req = http.request(options, (res) => {
-//     //   res.on('data', (chunk) => {
-//     //     ws.send(chunk.toString());
-//     //   });
-//     //   res.on('end', () => {
-//     //     ws.json(jsonData);
-//     //   });
-//     // });
-//     // req.on('error', (e) => {
-//     //   console.log(`problem with request: ${e.message}`);
-//     //   console.log(e.stack);
-//     // });
-//     //   req.end();
-//     while(true)
-//     {setTimeout(function() {
-//       ws.send('message');
-//     }, 5000 );}
-//   });
