@@ -45,7 +45,10 @@ function physicalStructProvider([initialNodes,initialContainers]){
     _.find(root,(cluster) => {
       var node = _.find(cluster.children,{ ID:NodeID });
       if(!node) return;
-      let imageTag = cloned.Spec.ContainerSpec.Image.split(':')[1];
+       var dt=new Date(cloned.UpdatedAt)
+      let imageTag = cloned.Spec.ContainerSpec.Image + " <br/> " + (cloned.Spec.ContainerSpec.Args?cloned.Spec.ContainerSpec.Args:"" ) +
+          " <br/> updated : "+dt.getDate()+"/"+(dt.getMonth()+1)+" "+ dt.getHours()+":"+dt.getMinutes()+"<br/> ID : "+cloned.Status.ContainerStatus.ContainerID+
+          "<br/> ip : ";
       cloned.tag = imageTag;
       node.children.push(cloned);
       return true;
@@ -110,14 +113,15 @@ function physicalStructProvider([initialNodes,initialContainers]){
     for (let node of nodes) {
       if(!nodeOrContainerExists(currentnodelist,node.ID)) {
         updateNode(node,'ready');
+
         addNode(node);
     } else {
       for (let currentnode of currentnodelist) {
         if (node.ID == currentnode.ID) {
           name = node.Description.Hostname;
           if(name.length>0) {
-            currentnode.Description.Hostname = name;
-            currentnode.name = name;
+            currentnode.Description.Hostname = name ;
+            currentnode.name = name+" <br/> "+ object.Spec.Role+" <br/>mem : "+(object.Description.Resources.MemoryBytes/100000000).toFixed(0)+"G";
           }
           updateNode(currentnode, node.state);
         } 
@@ -184,7 +188,7 @@ class DataProvider extends EventEmitter {
   
   start(){
     STARTED = 1;
-    console.log(STARTED);
+    //console.log(STARTED);
     var clusterInit = Promise.all([
       getAllNodes(),
       getAllTasks()
@@ -204,7 +208,7 @@ class DataProvider extends EventEmitter {
   reload() {
     if(STARTED ==0) return;
     STARTED++;
-    console.log(STARTED);
+   // console.log(STARTED);
     var clusterInit = Promise.all([
       getAllNodes(),
       getAllTasks()
