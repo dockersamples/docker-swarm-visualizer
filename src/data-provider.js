@@ -3,14 +3,14 @@ import _ from 'lodash';
 import { uuidRegExp } from './utils/helpers';
 
 import {
-  getUri,
-  getParallel,
-  getAllContainers,
-  getAllNodes,
-  getAllTasks,
-  getAllNodeClusters,
-  getWebSocket
-} from './utils/request';
+    getUri,
+    getParallel,
+    getAllContainers,
+    getAllNodes,
+    getAllTasks,
+    getAllNodeClusters,
+    getWebSocket
+    } from './utils/request';
 
 let STARTED = 0;
 
@@ -65,92 +65,92 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
     let NodeID = cloned.NodeID;
     _.find(root,(cluster) => {
       var node = _.find(cluster.children,{ ID:NodeID });
-      if(!node) return;
-       var dt = new Date(cloned.UpdatedAt);
-       var color =  stringToColor(cloned.ServiceID);
-       let tagName = cloned.Spec.ContainerSpec.Image.split(':')[1];
-       let dateStamp = dt.getDate()+"/"+(dt.getMonth()+1)+" "+ dt.getHours()+":"+dt.getMinutes();
+    if(!node) return;
+    var dt = new Date(cloned.UpdatedAt);
+    var color =  stringToColor(cloned.ServiceID);
+    let tagName = cloned.Spec.ContainerSpec.Image.split(':')[1];
+    let dateStamp = dt.getDate()+"/"+(dt.getMonth()+1)+" "+ dt.getHours()+":"+dt.getMinutes();
 
-       let imageTag ="<div style='height: 100%; padding: 5px 5px 5px 5px; border: 1px solid "+color+"'>"+
-           "<span style='color: white; font-weight: bold;font-size: 12px'>"+ cloned.Spec.ContainerSpec.Image.split(':')[0] +"</span>"+
-           "<br/> tag : " + (tagName ? tagName : "latest") +
-           "<br/>" + (cloned.Spec.ContainerSpec.Args?" cmd : "+cloned.Spec.ContainerSpec.Args:"" ) +
-           "<br/> updated : " + dateStamp +
-           "<br/> ID : "+cloned.Status.ContainerStatus.ContainerID+
-           "<br/>"+
-          "</div>";
+    let imageTag ="<div style='height: 100%; padding: 5px 5px 5px 5px; border: 1px solid "+color+"'>"+
+        "<span style='color: white; font-weight: bold;font-size: 12px'>"+ cloned.Spec.ContainerSpec.Image.split(':')[0] +"</span>"+
+        "<br/> tag : " + (tagName ? tagName : "latest") +
+        "<br/>" + (cloned.Spec.ContainerSpec.Args?" cmd : "+cloned.Spec.ContainerSpec.Args:"" ) +
+        "<br/> updated : " + dateStamp +
+        "<br/> ID : "+cloned.Status.ContainerStatus.ContainerID+
+        "<br/>"+
+        "</div>";
 
-      cloned.tag = imageTag;
-      node.children.push(cloned);
-      return true;
-    });
-  },
+    cloned.tag = imageTag;
+    node.children.push(cloned);
+    return true;
+  });
+},
 
-  updateContainer = (container) => {
-    let {uuid, node} = container;
-    let [nodeUuid] = uuidRegExp.exec(node);
-     _.find(root,(cluster) => {
-       let node = _.findWhere(cluster.children,{ uuid: nodeUuid });
-       if(!node) return;
+updateContainer = (container) => {
+  let {uuid, node} = container;
+  let [nodeUuid] = uuidRegExp.exec(node);
+  _.find(root,(cluster) => {
+    let node = _.findWhere(cluster.children,{ uuid: nodeUuid });
+  if(!node) return;
 
-      let target = _.findWhere(node.children,{ uuid }) || {};
-      if(!target) return;
+  let target = _.findWhere(node.children,{ uuid }) || {};
+  if(!target) return;
 
-      Object.assign(target,container);
-      return true;
-    });
-  }, 
-  
-  data = () => {
-    let clone = _.cloneDeep(root);
-    _.remove(clone,({uuid,children}) => {
-      return uuid === 'BYON' && !children.length
-    });
+  Object.assign(target,container);
+  return true;
+});
+},
 
-    return {root: clone};
-  },
-  
-  addNodeCluster = (nodeCluster) => {
-    var cloned = Object.assign({},nodeCluster);
-    cloned.children = [];
-    console.log(cloned);
-    root.push(cloned);
-  },
-  
-  removeNodeCluster = (nodeCluster) => {
-    _.remove(root,{ uuid: nodeCluster.uuid });
-  },
-  
-  updateNodeCluster = (nodeCluster) => {
-    var currentCluster = _.findWhere(root,{ uuid: nodeCluster.uuid });
-    Object.assign(currentCluster,nodeCluster);
-  },
-  
-  addNode = (node) => {
-    let cloned = Object.assign({},node);
-    cloned.children = [];
-    console.log(cloned);
-    let clusterUuid = "clusterid";
-    let cluster = _.findWhere(root,{ uuid: clusterUuid });
-    if(cluster) cluster.children.push(cloned);
-  },
-  updateNode = (node, state) => {
-    node.state = state;
-  },
-  updateData = (resources) => {
-    updateNodes(resources[0]);
-    
-    updateContainers(resources[1]);
-    data();
-  },
-  updateNodes = (nodes) => {
-    console.log(nodes);
-    let currentnodelist = root[0].children;
-    for (let node of nodes) {
-      if(!nodeOrContainerExists(currentnodelist,node.ID)) {
-        updateNode(node,'ready');
+data = () => {
+  let clone = _.cloneDeep(root);
+  _.remove(clone,({uuid,children}) => {
+    return uuid === 'BYON' && !children.length
+  });
 
-        addNode(node);
+  return {root: clone};
+},
+
+addNodeCluster = (nodeCluster) => {
+  var cloned = Object.assign({},nodeCluster);
+  cloned.children = [];
+  console.log(cloned);
+  root.push(cloned);
+},
+
+removeNodeCluster = (nodeCluster) => {
+  _.remove(root,{ uuid: nodeCluster.uuid });
+},
+
+updateNodeCluster = (nodeCluster) => {
+  var currentCluster = _.findWhere(root,{ uuid: nodeCluster.uuid });
+  Object.assign(currentCluster,nodeCluster);
+},
+
+addNode = (node) => {
+  let cloned = Object.assign({},node);
+  cloned.children = [];
+  console.log(cloned);
+  let clusterUuid = "clusterid";
+  let cluster = _.findWhere(root,{ uuid: clusterUuid });
+  if(cluster) cluster.children.push(cloned);
+},
+updateNode = (node, state) => {
+  node.state = state;
+},
+updateData = (resources) => {
+  updateNodes(resources[0]);
+
+  updateContainers(resources[1]);
+  data();
+},
+updateNodes = (nodes) => {
+  console.log(nodes);
+  let currentnodelist = root[0].children;
+  for (let node of nodes) {
+    if(!nodeOrContainerExists(currentnodelist,node.ID)) {
+      updateNode(node,'ready');
+
+      addNode(node);
     } else {
       for (let currentnode of currentnodelist) {
         if (node.ID == currentnode.ID) {
@@ -161,105 +161,105 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
             " <br/>"+(currentnode.Description.Resources.MemoryBytes/1000000000).toFixed(0)+"G free";
           }
           updateNode(currentnode, node.state);
-        } 
+        }
       }
-      
+
     }
   }
-    for (let node of currentnodelist) {
-      if(!nodeOrContainerExists(nodes,node.ID)){
-        updateNode(node,'down');
-      }
+  for (let node of currentnodelist) {
+    if(!nodeOrContainerExists(nodes,node.ID)){
+      updateNode(node,'down');
     }
+  }
 },
-  updateContainers = (containers) => {
-    let nodes = root[0].children;
-    for (let container of containers) {
-      let contNodeId = container.NodeID;
+updateContainers = (containers) => {
+  let nodes = root[0].children;
+  for (let container of containers) {
+    let contNodeId = container.NodeID;
 
-   for (var i=0, iLen=nodes.length; i<iLen; i++) {
-    if (nodes[i].ID == contNodeId) {
-      if(!nodeOrContainerExists(nodes[i].children,container.ID)){
-        addContainer(container);
-      }
-    }
-  }
-
-    }
-    for(let node of nodes) {
-      for(let container of node.children) {
-        if(!nodeOrContainerExists(containers,container.ID)){
-          let index = node.children.indexOf(container);
-          node.children.splice(index,1);
+    for (var i=0, iLen=nodes.length; i<iLen; i++) {
+      if (nodes[i].ID == contNodeId) {
+        if(!nodeOrContainerExists(nodes[i].children,container.ID)){
+          addContainer(container);
         }
       }
     }
 
-  };
+  }
+  for(let node of nodes) {
+    for(let container of node.children) {
+      if(!nodeOrContainerExists(containers,container.ID)){
+        let index = node.children.indexOf(container);
+        node.children.splice(index,1);
+      }
+    }
+  }
 
-  nodeClusters.forEach(addNodeCluster);
-  nodes.forEach(addNode);
+};
 
-  containers.forEach(addContainer);
+nodeClusters.forEach(addNodeCluster);
+nodes.forEach(addNode);
 
-  return {
-    addContainer,
-    updateData,
-    updateContainer,
-    data,
-    addNode,
-    updateNode,
-    addNodeCluster,
-    removeNodeCluster,
-    updateNodeCluster,    
-  };
+containers.forEach(addContainer);
+
+return {
+  addContainer,
+  updateData,
+  updateContainer,
+  data,
+  addNode,
+  updateNode,
+  addNodeCluster,
+  removeNodeCluster,
+  updateNodeCluster,
+};
 }
 
 class DataProvider extends EventEmitter {
   constructor() {
     super()
   }
-  
+
   start() {
     STARTED = 1;
     //console.log(STARTED);
     var clusterInit = Promise.all([
-      getAllNodes(),
-      getAllTasks()
+          getAllNodes(),
+          getAllTasks()
+        ])
+            .then((resources) => {
+          _.remove(resources[1],(nc) => nc.state === 'Empty cluster' || nc.state === 'Terminated');
+    return resources;
+  });
+
+  Promise.all([ clusterInit ])
+.then(([resources]) => {
+  PHYSICAL_STRUCT = physicalStructProvider(resources);
+      this.emit('infrastructure-data',PHYSICAL_STRUCT.data());
+      this.emit('start-reload');
+});
+}
+
+reload() {
+  if(STARTED == 0) return;
+  STARTED++;
+
+  // console.log(STARTED);
+  var clusterInit = Promise.all([
+        getAllNodes(),
+        getAllTasks()
       ])
-    .then((resources) => {
-      _.remove(resources[1],(nc) => nc.state === 'Empty cluster' || nc.state === 'Terminated');
-      return resources;
-    });
+          .then((resources) => {
+        _.remove(resources[1],(nc) => nc.state === 'Empty cluster' || nc.state === 'Terminated');
+  return resources;
+});
 
-    Promise.all([ clusterInit ])
-      .then(([resources]) => {
-        PHYSICAL_STRUCT = physicalStructProvider(resources);
-        this.emit('infrastructure-data',PHYSICAL_STRUCT.data());
-        this.emit('start-reload');
-       });
-  }
-
-  reload() {
-    if(STARTED == 0) return;
-    STARTED++;
-
-   // console.log(STARTED);
-    var clusterInit = Promise.all([
-      getAllNodes(),
-      getAllTasks()
-      ])
-    .then((resources) => {
-      _.remove(resources[1],(nc) => nc.state === 'Empty cluster' || nc.state === 'Terminated');
-      return resources;
-    });
-
-    Promise.all([ clusterInit ])
+Promise.all([ clusterInit ])
     .then(([resources]) => {
-      PHYSICAL_STRUCT.updateData(resources);
-      this.emit('infrastructure-data', PHYSICAL_STRUCT.data());
-    });
-  }
+  PHYSICAL_STRUCT.updateData(resources);
+this.emit('infrastructure-data', PHYSICAL_STRUCT.data());
+});
+}
 }
 
 export default SINGLETON = new DataProvider();
