@@ -32,6 +32,16 @@ function nodeOrContainerExists(arr, value) {
   return false;
 }
 
+var stringToColour = function(str) {
+
+  // str to hash
+  for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
+
+  // int/hash to hex
+  for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
+
+  return colour;
+}
 
 function physicalStructProvider([initialNodes,initialContainers]){
   let containers = _.map(initialContainers, _.cloneDeep);
@@ -45,10 +55,14 @@ function physicalStructProvider([initialNodes,initialContainers]){
     _.find(root,(cluster) => {
       var node = _.find(cluster.children,{ ID:NodeID });
       if(!node) return;
-       var dt=new Date(cloned.UpdatedAt)
-      let imageTag = cloned.Spec.ContainerSpec.Image + " <br/> " + (cloned.Spec.ContainerSpec.Args?cloned.Spec.ContainerSpec.Args:"" ) +
-          " <br/> updated : "+dt.getDate()+"/"+(dt.getMonth()+1)+" "+ dt.getHours()+":"+dt.getMinutes()+"<br/> ID : "+cloned.Status.ContainerStatus.ContainerID+
-          "<br/> ip : ";
+       var dt=new Date(cloned.UpdatedAt);
+       var color=  stringToColour(cloned.ServiceID);
+      let imageTag ="<span style='color:" + color+"; font-weight: bold;font-size: 12px'>"+ cloned.Spec.ContainerSpec.Image.split(':')[0] +"</span>"+
+          "<br/> tag : "+cloned.Spec.ContainerSpec.Image.split(':')[1]+
+          "<br/>" + (cloned.Spec.ContainerSpec.Args?" cmd : "+cloned.Spec.ContainerSpec.Args:"" ) +
+          "<br/> updated : "+dt.getDate()+"/"+(dt.getMonth()+1)+" "+ dt.getHours()+":"+dt.getMinutes()+
+          "<br/> ID : "+cloned.Status.ContainerStatus.ContainerID+
+          "<br/>";
       cloned.tag = imageTag;
       node.children.push(cloned);
       return true;
@@ -121,7 +135,8 @@ function physicalStructProvider([initialNodes,initialContainers]){
           name = node.Description.Hostname;
           if(name.length>0) {
             currentnode.Description.Hostname = name ;
-            currentnode.name = name+" <br/> "+ object.Spec.Role+" <br/>mem : "+(object.Description.Resources.MemoryBytes/100000000).toFixed(0)+"G";
+            currentnode.name = name+" <br/> "+ object.Spec.Role+
+            " <br/>"+(object.Description.Resources.MemoryBytes/100000000).toFixed(0)+"G free";
           }
           updateNode(currentnode, node.state);
         } 
