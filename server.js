@@ -8,12 +8,14 @@ var http = require('http');
 var WS = require('ws');
 
 var WebSocketServer = WS.Server;
-var host = process.env.HOST;
-var port;
+var host =  process.env.HOST ||"localhost";
+process.env.HOST=host
+var port =process.env.PORT || 8080;
+process.env.PORT=port;
 var indexData;
 var app = express();
-var ms = process.env.MS;
-
+var ms = process.env.MS || 300;
+process.env.MS=ms
 
 app.use(express.static('dist'));
   
