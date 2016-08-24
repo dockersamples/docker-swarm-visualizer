@@ -1,12 +1,14 @@
 *** note ***
-This is an improvment on the original https://github.com/ManoMarks/docker-swarm-visualizer
+
+I did some imporvemennt to the original https://github.com/ManoMarks/docker-swarm-visualizer
+
 It adds node and container data to make this visualizer a better swarm monitoring tool.
 
-![Sample image of  nodes with metadata](./nodes.png)
+![Sample image of  nodes with data](./nodes.png)
 
 
 
-instructions from https://github.com/ManoMarks/docker-swarm-visualizer:
+see installation instructions from https://github.com/ManoMarks/docker-swarm-visualizer below :
 
 # Docker Swarm Visualizer
 
