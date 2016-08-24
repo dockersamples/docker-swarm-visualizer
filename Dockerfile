@@ -18,8 +18,8 @@ RUN npm run dist
 # Default host is localhost. This is for same-origin policies.
 ENV HOST "localhost"
 
-# Number of milliseconds between polling requests. Default is 200.
-ENV MS 200
+# Number of milliseconds between polling requests. Default is 1000.
+ENV MS 1000
 
 #Default port to expose.
 ENV PORT 8080
