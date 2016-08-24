@@ -135,8 +135,8 @@ function physicalStructProvider([initialNodes,initialContainers]){
           name = node.Description.Hostname;
           if(name.length>0) {
             currentnode.Description.Hostname = name ;
-            currentnode.name = name+" <br/> "+ object.Spec.Role+
-            " <br/>"+(object.Description.Resources.MemoryBytes/100000000).toFixed(0)+"G free";
+            currentnode.name = name+" <br/> "+ currentnode.Spec.Role+
+            " <br/>"+(currentnode.Description.Resources.MemoryBytes/1000000000).toFixed(0)+"G free";
           }
           updateNode(currentnode, node.state);
         } 
