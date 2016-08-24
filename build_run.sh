@@ -1,4 +1,4 @@
-
+#RUN npm install --unsafe-perm=true
 
 docker swarm init  --advertise-addr 127.0.0.1:2377
 docker service create rabbitmq:3.6.5
