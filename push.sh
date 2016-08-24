@@ -1,5 +1,5 @@
 
-docker build -t=datarails/datarailsserver:visualizer .
-docker push datarails/datarailsserver:visualizer
+docker build -t=turaaa/swarmvisualizer:latest .
+docker push turaaa/swarmvisualizer:latest
 docker swarm leave --force
 

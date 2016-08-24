@@ -4,6 +4,5 @@ docker service create rabbitmq:3.6.5
 
 npm run dist && npm start
 
-
 #docker swarm leave --force
 
