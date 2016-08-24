@@ -44,6 +44,8 @@ function filterStoppedNodes (objects) {
 	object.state = "down"	
     }
     object.name = object.Description.Hostname;
+    object.name= object.name+" <br/>"+object.Spec.Role+
+        " <br/>"+(object.Description.Resources.MemoryBytes/1000000000).toFixed(0)+"G free";
     readyNodes.push(object);
   }
   readyNodes.sort(function (a, b) {
