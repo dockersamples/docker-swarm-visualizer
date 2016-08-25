@@ -15,6 +15,18 @@ In some cases, you need to run the docker with your master node hostname instead
 
 Example: `docker run -it -d -p 5000:5000 -e HOST=node-master -e PORT=5000 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer`
 
+## Running on ARM
+
+[@alexellisuk](https://twitter.com/alexellisuk) has pushed an image to the Docker Hub as `alexellis2/visualizer-arm:latest` it will run the code on an ARMv6 or ARMv7 device such as the Raspberry Pi. 
+
+If you would like to build the image from source run the following command:
+
+```
+$ docker build -f Dockerfile.arm -t visualizer-arm:latest .
+```
+
+## Sample
+
 Here's a sample with one node:
 
 ![Sample image of one node](./samplenode.png)
