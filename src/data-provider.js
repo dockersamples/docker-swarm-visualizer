@@ -23,27 +23,36 @@ function tutumEventHandler(e) {
   console.log(e);
 }
 
-function nodeOrContainerExists(arr, value) {
+let nodeOrContainerExists = (arr, value) => {
 
   for (var i=0, iLen=arr.length; i<iLen; i++) {
 
     if (arr[i].ID == value) return true;
   }
   return false;
-}
+};
 
-var stringToColour = function(str) {
+let strToHash = (str) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash;
+};
 
-  // str to hash
-  for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
+let stringToColour = (str) => {
+  let hash = strToHash(str);
 
   // int/hash to hex
-  for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
+  let colour = "#";
+  for (var i = 0; i < 3; ) {
+    colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2);
+  }
 
   return colour;
-}
+};
 
-function physicalStructProvider([initialNodes,initialContainers]){
+let physicalStructProvider = ([initialNodes, initialContainers]) => {
   let containers = _.map(initialContainers, _.cloneDeep);
   let nodeClusters = [{uuid:"clusterid", name:""}];
   let nodes = _.map(initialNodes, _.cloneDeep);
@@ -67,7 +76,6 @@ function physicalStructProvider([initialNodes,initialContainers]){
       node.children.push(cloned);
       return true;
     });
-  
   },
   updateContainer = (container) => {
     let {uuid, node} = container;
