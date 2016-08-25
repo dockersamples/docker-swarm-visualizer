@@ -83,18 +83,18 @@ function  render ({root}) {
 
   container
     .classed('foreign', (d) => !d.state)
-    .attr('tag',(d) => _.kebabCase(d.tag))
+    .attr('tag',(d) => _.kebabCase(d.tag)).html((d) => d.tag)
 
   container.on('mouseenter',null);
   container.on('mouseleave',null);
 
-  container.on('mouseenter',function(){
-    d3.select(this).html((d) => d.name);
-  });
+  //container.on('mouseenter',function(){
+  //  d3.select(this).html((d) => d.name);
+  //});
 
-  container.on('mouseleave',function(){
-    d3.select(this).html('');
-  });
+  //container.on('mouseleave',function(){
+  //  d3.select(this).html('');
+  //});
 
   cluster.exit().remove();
   container.exit().remove();
