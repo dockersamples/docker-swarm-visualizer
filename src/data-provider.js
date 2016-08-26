@@ -64,10 +64,15 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
     _.find(root,(cluster) => {
       var node = _.find(cluster.children,{ ID:NodeID });
       if(!node) return;
-       var dt=new Date(cloned.UpdatedAt);
+       var dt = new Date(cloned.UpdatedAt);
        var color=  stringToColour(cloned.ServiceID);
-      let imageTag ="<span style='color:" + color+"; font-weight: bold;font-size: 12px'>"+ cloned.Spec.ContainerSpec.Image.split(':')[0] +"</span>"+
-          "<br/> tag : "+cloned.Spec.ContainerSpec.Image.split(':')[1]+
+       let tagName = cloned.Spec.ContainerSpec.Image.split(':')[1];
+       if(!tagName) {
+          tagName = "latest";
+       }
+
+       let imageTag ="<span style='color:" + color+"; font-weight: bold;font-size: 12px'>"+ cloned.Spec.ContainerSpec.Image.split(':')[0] +"</span>"+
+          "<br/> tag : "+ tagName +
           "<br/>" + (cloned.Spec.ContainerSpec.Args?" cmd : "+cloned.Spec.ContainerSpec.Args:"" ) +
           "<br/> updated : "+dt.getDate()+"/"+(dt.getMonth()+1)+" "+ dt.getHours()+":"+dt.getMinutes()+
           "<br/> ID : "+cloned.Status.ContainerStatus.ContainerID+
