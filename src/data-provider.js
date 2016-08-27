@@ -12,16 +12,16 @@ import {
   getWebSocket
 } from './utils/request';
 
-var STARTED = 0;
+let STARTED = 0;
 
-let SINGLETON,
-    CURRENT_SERVICES_URIS;
+let SINGLETON;
+let CURRENT_SERVICES_URIS;
 
 let PHYSICAL_STRUCT;
 
-function tutumEventHandler(e) {
+let tutumEventHandler = (e) => {
   console.log(e);
-}
+};
 
 let nodeOrContainerExists = (arr, value) => {
 
@@ -40,16 +40,18 @@ let strToHash = (str) => {
   return hash;
 };
 
-let stringToColour = (str) => {
-  let hash = strToHash(str);
-
-  // int/hash to hex
-  let colour = "#";
+let hashToHexColor = (hash) => {
+  let color = "#";
   for (var i = 0; i < 3; ) {
-    colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2);
+    color += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2);
   }
+  return color;
+}
 
-  return colour;
+let stringToColor = (str) => {
+  let hash = strToHash(str);
+  let color = hashToHexColor(hash);
+  return color;
 };
 
 let physicalStructProvider = ([initialNodes, initialContainers]) => {
@@ -65,23 +67,25 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
       var node = _.find(cluster.children,{ ID:NodeID });
       if(!node) return;
        var dt = new Date(cloned.UpdatedAt);
-       var color=  stringToColour(cloned.ServiceID);
+       var color =  stringToColor(cloned.ServiceID);
        let tagName = cloned.Spec.ContainerSpec.Image.split(':')[1];
-       if(!tagName) {
-          tagName = "latest";
-       }
+       let dateStamp = dt.getDate()+"/"+(dt.getMonth()+1)+" "+ dt.getHours()+":"+dt.getMinutes();
 
-       let imageTag ="<span style='color:" + color+"; font-weight: bold;font-size: 12px'>"+ cloned.Spec.ContainerSpec.Image.split(':')[0] +"</span>"+
-          "<br/> tag : "+ tagName +
-          "<br/>" + (cloned.Spec.ContainerSpec.Args?" cmd : "+cloned.Spec.ContainerSpec.Args:"" ) +
-          "<br/> updated : "+dt.getDate()+"/"+(dt.getMonth()+1)+" "+ dt.getHours()+":"+dt.getMinutes()+
-          "<br/> ID : "+cloned.Status.ContainerStatus.ContainerID+
-          "<br/>";
+       let imageTag ="<div style='height: 100%; padding: 5px 5px 5px 5px; border: 1px solid "+color+"'>"+
+           "<span style='color: white; font-weight: bold;font-size: 12px'>"+ cloned.Spec.ContainerSpec.Image.split(':')[0] +"</span>"+
+           "<br/> tag : " + (tagName ? tagName : "latest") +
+           "<br/>" + (cloned.Spec.ContainerSpec.Args?" cmd : "+cloned.Spec.ContainerSpec.Args:"" ) +
+           "<br/> updated : " + dateStamp +
+           "<br/> ID : "+cloned.Status.ContainerStatus.ContainerID+
+           "<br/>"+
+          "</div>";
+
       cloned.tag = imageTag;
       node.children.push(cloned);
       return true;
     });
   },
+
   updateContainer = (container) => {
     let {uuid, node} = container;
     let [nodeUuid] = uuidRegExp.exec(node);
@@ -96,6 +100,7 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
       return true;
     });
   }, 
+  
   data = () => {
     let clone = _.cloneDeep(root);
     _.remove(clone,({uuid,children}) => {
@@ -104,19 +109,23 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
 
     return {root: clone};
   },
+  
   addNodeCluster = (nodeCluster) => {
     var cloned = Object.assign({},nodeCluster);
     cloned.children = [];
     console.log(cloned);
     root.push(cloned);
   },
+  
   removeNodeCluster = (nodeCluster) => {
     _.remove(root,{ uuid: nodeCluster.uuid });
   },
+  
   updateNodeCluster = (nodeCluster) => {
     var currentCluster = _.findWhere(root,{ uuid: nodeCluster.uuid });
     Object.assign(currentCluster,nodeCluster);
   },
+  
   addNode = (node) => {
     let cloned = Object.assign({},node);
     cloned.children = [];
@@ -206,15 +215,12 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
   };
 }
 
-
-
 class DataProvider extends EventEmitter {
-  constructor(){
+  constructor() {
     super()
-    
   }
   
-  start(){
+  start() {
     STARTED = 1;
     //console.log(STARTED);
     var clusterInit = Promise.all([
@@ -226,16 +232,18 @@ class DataProvider extends EventEmitter {
       return resources;
     });
 
-      Promise.all([ clusterInit ])
+    Promise.all([ clusterInit ])
       .then(([resources]) => {
-      PHYSICAL_STRUCT = physicalStructProvider(resources);
-      this.emit('infrastructure-data',PHYSICAL_STRUCT.data());
-      this.emit('start-reload');
+        PHYSICAL_STRUCT = physicalStructProvider(resources);
+        this.emit('infrastructure-data',PHYSICAL_STRUCT.data());
+        this.emit('start-reload');
        });
   }
+
   reload() {
-    if(STARTED ==0) return;
+    if(STARTED == 0) return;
     STARTED++;
+
    // console.log(STARTED);
     var clusterInit = Promise.all([
       getAllNodes(),
@@ -246,13 +254,12 @@ class DataProvider extends EventEmitter {
       return resources;
     });
 
-      Promise.all([ clusterInit ])
-      .then(([resources]) => {
+    Promise.all([ clusterInit ])
+    .then(([resources]) => {
       PHYSICAL_STRUCT.updateData(resources);
-      this.emit('infrastructure-data',PHYSICAL_STRUCT.data());
+      this.emit('infrastructure-data', PHYSICAL_STRUCT.data());
     });
   }
-  
 }
 
 export default SINGLETON = new DataProvider();
