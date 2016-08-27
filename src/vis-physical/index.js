@@ -13,12 +13,14 @@ var vis = d3.select('#app')
   .attr('id','vis-physical');
 
 var wrapper = vis.append('div')
-  .classed('wrapper',true)
+  .classed('wrapper', true);
+
 function removeVis() {
   cluster = wrapper.selectAll('.node-cluster')
   cluster.remove();
 }
-function  render ({root}) {
+
+function render ({root}) {
   var cluster, node, container, clusterEnter, nodeEnter;
   cluster = wrapper.selectAll('.node-cluster').data(root);
 
@@ -61,7 +63,8 @@ function  render ({root}) {
 
   cluster
     .select('.node-cluster-meta')
-    .html(({name,state='',node_type='',region=''}) => {
+    .html(({name,state = '', node_type = '', region = ''}) => {
+
       // This is a HORRIBLE hack
       // but I don't wanna fetch nodeTypes from the API as from now
       var displayType = node_type.split('/')[4] || ''; // horrible
@@ -88,18 +91,9 @@ function  render ({root}) {
   container.on('mouseenter',null);
   container.on('mouseleave',null);
 
-  //container.on('mouseenter',function(){
-  //  d3.select(this).html((d) => d.name);
-  //});
-
-  //container.on('mouseleave',function(){
-  //  d3.select(this).html('');
-  //});
-
   cluster.exit().remove();
   container.exit().remove();
   node.exit().remove();
-
 }
 
-export default {render}
+export default { render }

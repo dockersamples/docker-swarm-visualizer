@@ -8,8 +8,6 @@ require('normalize.css');
 require('animate.css/animate.css');
 require('./main.less');
 
-
-
 function parseQuery(qstr) {
   var query = {};
   var a = qstr.substr(1).split('&');
@@ -19,22 +17,11 @@ function parseQuery(qstr) {
   }
   return query;
 }
+
 let query = parseQuery(window.location.search);
+let tabPhysical = document.getElementById('tab-physical');
+let physical = document.getElementById('vis-physical');
 
-
-var tabPhysical = document.getElementById('tab-physical');
-
-var physical = document.getElementById('vis-physical');
-
-/*
-if(!query.tab || query.tab === 'tab1'){
-  document.body.className = 'tab1';
-  addClass(physical,'hidden');
-} else {
-  document.body.className = 'tab2';
-  removeClass(tabPhysical,'hidden');
-}
-*/
 tabPhysical.addEventListener('click',() => {
   removeClass(physical, 'hidden');
   removeClass(tabPhysical, 'hidden');
@@ -42,12 +29,16 @@ tabPhysical.addEventListener('click',() => {
   document.body.className = 'tab2';
 });
 
+/* Enable polling */
 function reload(){
   provider.reload();
-  setTimeout(reload,MS);
+  setTimeout(reload, MS);
 }
-console.log(MS);
-provider.on('infrastructure-data',physicalVisualization.render);
+
+console.log("Polling refresh: " + MS);
+
+provider.on('infrastructure-data', physicalVisualization.render);
 provider.start();
 reload();
+
 //TODO: Emit Event that requeries data, removes old data recreates visualizations
