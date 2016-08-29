@@ -4,9 +4,11 @@
 
 # Docker Swarm Visualizer
 *** note ***
-Recent import by @DovAmir add node and container data.
+Recent import by @DovAmir adds node and container data.
 
-Demo container that displays Docker services on a Docker Swarm a diagram.
+Demo container that displays Docker services running on a Docker Swarm in a diagram.
+
+This works only with [Docker Swarm Mode](https://docs.docker.com/engine/swarm/) which was introduced in Docker 1.12. These instructions presume you are running on the master node and you already have a Swarm running.
 
 Each node in the swarm will show all tasks running on it. When a service goes down it'll be removed. When a node goes down it won't, instead the circle at the top will turn red to indicate it went down. Tasks will be removed.
 Occasionally the Remote API will return incomplete data, for instance the node can be missing a name. The next time info for that node is pulled, the name will update.
