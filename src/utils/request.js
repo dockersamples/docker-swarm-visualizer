@@ -27,7 +27,7 @@ function filterStoppedTasks (objects) {
   let runningTasks = [];
   for(let i=0;i<objects.length;i++){
     let object = objects[i];
-    if(object.Status.State=="running" && object.DesiredState=="running") {
+    if( object.DesiredState=="running") { //object.Status.State=="running" &&
       runningTasks.push(object);
     }
   }

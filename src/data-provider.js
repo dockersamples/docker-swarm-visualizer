@@ -70,17 +70,18 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
     var color =  stringToColor(cloned.ServiceID);
     let tagName = cloned.Spec.ContainerSpec.Image.split(':')[1];
     let dateStamp = dt.getDate()+"/"+(dt.getMonth()+1)+" "+ dt.getHours()+":"+dt.getMinutes();
-
-    let imageTag ="<div style='height: 100%; padding: 5px 5px 5px 5px; border: 1px solid "+color+"'>"+
-        "<span style='color: white; font-weight: bold;font-size: 12px'>"+ cloned.Spec.ContainerSpec.Image.split(':')[0] +"</span>"+
+    let startState=cloned.Status.State;
+    let imageTag ="<div style='height: 100%; padding: 5px 5px 5px 5px; border: 2px solid "+color+"'>"+
+        "<span class='contname' style='color: white; font-weight: bold;font-size: 12px'>"+ cloned.Spec.ContainerSpec.Image.split(':')[0] +"</span>"+
         "<br/> tag : " + (tagName ? tagName : "latest") +
-        "<br/>" + (cloned.Spec.ContainerSpec.Args?" cmd : "+cloned.Spec.ContainerSpec.Args:"" ) +
-        "<br/> updated : " + dateStamp +
-        "<br/> ID : "+cloned.Status.ContainerStatus.ContainerID+
-        "<br/>"+
+        "<br/>" + (cloned.Spec.ContainerSpec.Args?" cmd : "+cloned.Spec.ContainerSpec.Args+"<br/>" : "" ) +
+        " updated : " + dateStamp +
+        "<br/>"+cloned.Status.ContainerStatus.ContainerID+
+        "<br/> state : "+startState
         "</div>";
 
     cloned.tag = imageTag;
+    cloned.state = startState;
     node.children.push(cloned);
     return true;
   });
@@ -179,9 +180,11 @@ updateContainers = (containers) => {
 
     for (var i=0, iLen=nodes.length; i<iLen; i++) {
       if (nodes[i].ID == contNodeId) {
-        if(!nodeOrContainerExists(nodes[i].children,container.ID)){
-          addContainer(container);
+        while(nodeOrContainerExists(nodes[i].children,container.ID)){
+          let index = nodes[i].children.indexOf(container);
+          nodes[i].children.splice(index,1);
         }
+        addContainer(container);
       }
     }
 
@@ -256,6 +259,8 @@ reload() {
 
 Promise.all([ clusterInit ])
     .then(([resources]) => {
+      if (!PHYSICAL_STRUCT)
+        PHYSICAL_STRUCT = physicalStructProvider(resources);
   PHYSICAL_STRUCT.updateData(resources);
 this.emit('infrastructure-data', PHYSICAL_STRUCT.data());
 });

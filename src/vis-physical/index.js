@@ -87,6 +87,7 @@ node
 container
     .classed('foreign', (d) => !d.state)
 .attr('tag',(d) => _.kebabCase(d.tag)).html((d) => d.tag)
+.attr('data-state',(d) => _.kebabCase(d.state))
 
 container.on('mouseenter',null);
 container.on('mouseleave',null);

@@ -12,6 +12,7 @@ RUN npm install --unsafe-perm=true
 # Add the rest of the sources
 ADD . /app
 
+
 # Build the app
 RUN npm run dist
 
