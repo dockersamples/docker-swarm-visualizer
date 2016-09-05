@@ -38,4 +38,5 @@ jspm_packages
 
 # scripts
 *.sh
+*.iml
 
