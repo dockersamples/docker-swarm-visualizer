@@ -76,8 +76,8 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
         "<br/> tag : " + (tagName ? tagName : "latest") +
         "<br/>" + (cloned.Spec.ContainerSpec.Args?" cmd : "+cloned.Spec.ContainerSpec.Args+"<br/>" : "" ) +
         " updated : " + dateStamp +
-        "<br/>"+cloned.Status.ContainerStatus.ContainerID+
-        "<br/> state : "+startState
+        "<br/>"+cloned.Status.ContainerStatus.ContainerID +
+        "<br/> state : "+startState +
         "</div>";
 
     cloned.tag = imageTag;
