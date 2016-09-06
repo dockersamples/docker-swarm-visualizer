@@ -54,6 +54,8 @@ let stringToColor = (str) => {
   return color;
 };
 
+
+
 let physicalStructProvider = ([initialNodes, initialContainers]) => {
   let containers = _.map(initialContainers, _.cloneDeep);
   let nodeClusters = [{uuid:"clusterid", name:""}];
@@ -71,17 +73,23 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
     let tagName = cloned.Spec.ContainerSpec.Image.split(':')[1];
     let dateStamp = dt.getDate()+"/"+(dt.getMonth()+1)+" "+ dt.getHours()+":"+dt.getMinutes();
     let startState=cloned.Status.State;
+    let containerlink = window.location.href+  "apis/containers/"+cloned.Status.ContainerStatus.ContainerID + "/json";
+
+
+
     let imageTag ="<div style='height: 100%; padding: 5px 5px 5px 5px; border: 2px solid "+color+"'>"+
         "<span class='contname' style='color: white; font-weight: bold;font-size: 12px'>"+ cloned.Spec.ContainerSpec.Image.split(':')[0] +"</span>"+
         "<br/> tag : " + (tagName ? tagName : "latest") +
         "<br/>" + (cloned.Spec.ContainerSpec.Args?" cmd : "+cloned.Spec.ContainerSpec.Args+"<br/>" : "" ) +
         " updated : " + dateStamp +
-        "<br/>"+cloned.Status.ContainerStatus.ContainerID +
+        "<br/>"+ cloned.Status.ContainerStatus.ContainerID +
         "<br/> state : "+startState +
         "</div>";
 
+
     cloned.tag = imageTag;
     cloned.state = startState;
+    cloned.link = containerlink;
     node.children.push(cloned);
     return true;
   });
@@ -145,7 +153,7 @@ updateData = (resources) => {
   data();
 },
 updateNodes = (nodes) => {
-  console.log(nodes);
+  //console.log(nodes);
   let currentnodelist = root[0].children;
   for (let node of nodes) {
     if(!nodeOrContainerExists(currentnodelist,node.ID)) {

@@ -20,6 +20,38 @@ function removeVis() {
   cluster.remove();
 }
 
+let loadScript=(url, callback) =>{
+
+    var script = document.createElement("script")
+    script.type = "text/javascript";
+    if (script.readyState) { //IE
+        script.onreadystatechange = function() {
+            if (script.readyState == "loaded" || script.readyState == "complete") {
+                script.onreadystatechange = null;
+                callback();
+            }
+        };
+    } else { //Others
+        script.onload = function() {
+            callback();
+        };
+    }
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+
+let showContainer =(url) =>{
+
+    loadScript("https://code.jquery.com/jquery-3.1.0.min.js", function() {
+        $.getJSON(url, function(obj) {
+
+            var str = JSON.stringify(obj, undefined, 4);
+            var myWindow = window.open("data:application/json," + encodeURIComponent(str) ,  "_blank");
+            myWindow.focus();
+        });
+    });
+};
+
 function render ({root}) {
   var cluster, node, container, clusterEnter, nodeEnter;
   cluster = wrapper.selectAll('.node-cluster').data(root);
@@ -84,13 +116,18 @@ node
 .attr('data-state',(d) => _.kebabCase(d.state))
 .html((d) => d.name);
 
+
 container
     .classed('foreign', (d) => !d.state)
 .attr('tag',(d) => _.kebabCase(d.tag)).html((d) => d.tag)
 .attr('data-state',(d) => _.kebabCase(d.state))
 
+var mylink=container[0][0].__data__.link;
 container.on('mouseenter',null);
 container.on('mouseleave',null);
+container.on('click', function(){
+    showContainer(mylink)});
+
 
 cluster.exit().remove();
 container.exit().remove();
