@@ -122,12 +122,13 @@ container
 .attr('tag',(d) => _.kebabCase(d.tag)).html((d) => d.tag)
 .attr('data-state',(d) => _.kebabCase(d.state))
 
-var mylink=container[0][0].__data__.link;
+
 container.on('mouseenter',null);
 container.on('mouseleave',null);
 container.on('click', function(){
-
-    showContainer(d3.select(this)[0][0].__data__.link)
+    if (d3.select(this)[0][0].__data__.link){
+        showContainer(d3.select(this)[0][0].__data__.link)
+    }
 });
 
 

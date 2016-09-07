@@ -66,14 +66,14 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
     var cloned = Object.assign({},container);
     let NodeID = cloned.NodeID;
     _.find(root,(cluster) => {
-      var node = _.find(cluster.children,{ ID:NodeID });
+    var node = _.find(cluster.children,{ ID:NodeID });
     if(!node) return;
     var dt = new Date(cloned.UpdatedAt);
     var color =  stringToColor(cloned.ServiceID);
     let tagName = cloned.Spec.ContainerSpec.Image.split(':')[1];
     let dateStamp = dt.getDate()+"/"+(dt.getMonth()+1)+" "+ dt.getHours()+":"+dt.getMinutes();
     let startState=cloned.Status.State;
-    let containerlink = window.location.href+  "apis/containers/"+cloned.Status.ContainerStatus.ContainerID + "/json";
+
 
 
 
@@ -86,10 +86,13 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
         "<br/> state : "+startState +
         "</div>";
 
-
+    if (node.Spec.Role=='manager')  {
+      let containerlink = window.location.href+  "apis/containers/"+cloned.Status.ContainerStatus.ContainerID + "/json";
+      cloned.link = containerlink;
+    }
     cloned.tag = imageTag;
     cloned.state = startState;
-    cloned.link = containerlink;
+
     node.children.push(cloned);
     return true;
   });
