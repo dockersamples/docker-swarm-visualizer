@@ -126,7 +126,9 @@ var mylink=container[0][0].__data__.link;
 container.on('mouseenter',null);
 container.on('mouseleave',null);
 container.on('click', function(){
-    showContainer(mylink)});
+
+    showContainer(d3.select(this)[0][0].__data__.link)
+});
 
 
 cluster.exit().remove();
