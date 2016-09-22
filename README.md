@@ -4,7 +4,7 @@
 
 # Docker Swarm Visualizer
 *** note ***
-Recent import by @DovAmir adds node and container data.
+_This only works with Docker Swarm Mode in Docker Engine 1.12.0 and later. It does not work with the seprate Docker Swarm project_
 
 Demo container that displays Docker services running on a Docker Swarm in a diagram.
 
@@ -33,11 +33,7 @@ If you would like to build the image from source run the following command:
 $ docker build -f Dockerfile.arm -t visualizer-arm:latest .
 ```
 
-## Sample
 
-Here's a sample with one node:
-
-![Sample image of one node](./samplenode.png)
 
 TODO:
 * Take out or fix how dist works
