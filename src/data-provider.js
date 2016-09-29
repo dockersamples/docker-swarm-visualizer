@@ -158,7 +158,7 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
           if(name.length>0) {
             currentnode.Description.Hostname = name ;
             currentnode.name = name+" <br/> "+ currentnode.Spec.Role+
-            " <br/>"+(currentnode.Description.Resources.MemoryBytes/1000000000).toFixed(0)+"G free";
+            " <br/>"+(currentnode.Description.Resources.MemoryBytes/1000000000).toFixed(0)+"G RAM";
           }
           updateNode(currentnode, node.state);
         } 
