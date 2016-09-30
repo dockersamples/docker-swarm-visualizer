@@ -5,7 +5,7 @@
 # Docker Swarm Visualizer
 *** note ***
 _This only works with Docker Swarm Mode in Docker Engine 1.12.0 and later. It does not work with the separate Docker Swarm project_
-***note***
+
 Thanks to all the contributors, and a special thanks to [@DovAmir](https://github.com/DovAmir) and [@alexellis](https://github.com/alexellis) for their big contributions.
 
 Demo container that displays Docker services running on a Docker Swarm in a diagram.
