@@ -4,7 +4,11 @@
 
 # Docker Swarm Visualizer
 *** note ***
-_This only works with Docker Swarm Mode in Docker Engine 1.12.0 and later. It does not work with the seprate Docker Swarm project_
+<<<<<<< HEAD
+_This only works with Docker Swarm Mode in Docker Engine 1.12.0 and later. It does not work with the separate Docker Swarm project_
+=======
+***note***
+Thanks to all the contributors, and a special thanks to [@DovAmir](https://github.com/DovAmir) and [@alexellis](https://github.com/alexellis) for their big contributions.
 
 Demo container that displays Docker services running on a Docker Swarm in a diagram.
 
@@ -25,7 +29,7 @@ Example: `docker run -it -d -p 5000:5000 -e HOST=node-master -e PORT=5000 -v /va
 
 ## Running on ARM
 
-[@alexellisuk](https://twitter.com/alexellisuk) has pushed an image to the Docker Hub as `alexellis2/visualizer-arm:latest` it will run the code on an ARMv6 or ARMv7 device such as the Raspberry Pi. 
+[@alexellisuk](https://twitter.com/alexellisuk) has pushed an image to the Docker Hub as `alexellis2/visualizer-arm:latest` it will run the code on an ARMv6 or ARMv7 device such as the Raspberry Pi.
 
 If you would like to build the image from source run the following command:
 
@@ -40,4 +44,3 @@ TODO:
 * Comment much more extensively
 * Create tests and make them work better
 * Make CSS more elastic. Currently optimized for 3 nodes on a big screen
-

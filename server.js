@@ -14,7 +14,7 @@ var port =process.env.PORT || 8080;
 process.env.PORT=port;
 var indexData;
 var app = express();
-var ms = process.env.MS || 1000;
+var ms = process.env.MS || 5000;
 process.env.MS=ms
 
 app.use(express.static('dist'));
