@@ -4,7 +4,7 @@
 
 # Docker Swarm Visualizer
 *** note ***
-Recent import by [@DovAmir](https://github.com/DovAmir) adds node and container data.
+Thanks to all the contributors, and a special thanks to [@DovAmir](https://github.com/DovAmir) and [@alexellis](https://github.com/alexellis) for their big contributions.
 
 Demo container that displays Docker services running on a Docker Swarm in a diagram.
 
