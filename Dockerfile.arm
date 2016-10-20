@@ -16,14 +16,9 @@ ADD . /app
 # Build the app
 RUN npm run dist
 
-# Default host is localhost. This is for same-origin policies.
-ENV HOST "localhost"
-
 # Number of milliseconds between polling requests. Default is 200.
 ENV MS 200
 
-#Default port to expose.
-ENV PORT 8080
 EXPOSE 8080
 
 CMD ["npm","start"]

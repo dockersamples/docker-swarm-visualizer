@@ -8,21 +8,14 @@ var http = require('http');
 var WS = require('ws');
 
 var WebSocketServer = WS.Server;
-var host =  process.env.HOST ||"localhost";
-process.env.HOST=host
-var port =process.env.PORT || 8080;
-process.env.PORT=port;
 var indexData;
 var app = express();
 var ms = process.env.MS || 5000;
 process.env.MS=ms
 
 app.use(express.static('dist'));
-  
-var server = app.listen(process.env.PORT || 3000, function () {
-  port = server.address().port;
-  process.env.HOST = host;
-  process.env.PORT = port;
+
+var server = app.listen(8080, function () {
     indexData = _.template(fs.readFileSync('index.tpl'))(process.env);
 
 });
@@ -36,15 +29,15 @@ console.log(process.env.DOCKER_HOST)
   if(process.env.DOCKER_HOST) {
      try {
 	   dh = process.env.DOCKER_HOST.split(":");
-	   var docker_host = dh[0]; 
+	   var docker_host = dh[0];
 	   var docker_port = dh[1];
-     } 
+     }
 	 catch (err) {
 	   console.log(err.stack)
      }
 	}
   var wss = new WebSocketServer({server: server});
-  
+
   app.get('/apis/*', function(req, response) {
       var path = req.params[0];
       var jsonData={};

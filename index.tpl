@@ -23,8 +23,6 @@
   </div>
 
   <script type="text/javascript">
-    window.HOST = '<%= HOST %>';
-    window.PORT = '<%= PORT %>';
     window.MS = '<%= MS %>';
   </script>
   <script type="text/javascript" src="app.js"></script>

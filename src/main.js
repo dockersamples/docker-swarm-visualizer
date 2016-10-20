@@ -2,7 +2,7 @@
 import physicalVisualization from './vis-physical';
 import provider from './data-provider';
 import { hasClass, removeClass, addClass, uuidRegExp } from './utils/helpers';
-let { HOST,PORT,MS } = window;
+let { MS } = window;
 
 require('normalize.css');
 require('animate.css/animate.css');

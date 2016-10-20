@@ -15,15 +15,11 @@ This works only with [Docker Swarm Mode](https://docs.docker.com/engine/swarm/) 
 Each node in the swarm will show all tasks running on it. When a service goes down it'll be removed. When a node goes down it won't, instead the circle at the top will turn red to indicate it went down. Tasks will be removed.
 Occasionally the Remote API will return incomplete data, for instance the node can be missing a name. The next time info for that node is pulled, the name will update.
 
-To run: `docker run -it -d -p 8080:8080 -e HOST=[YOURHOST] -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer`
+To run: `docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer`
 
-If port 8080 is already in use on your host, you can specify e.g. `-p [YOURPORT]:[YOURPORT] -e HOST=[YOURHOST] -e PORT=[YOURPORT]` instead.
+If port 8080 is already in use on your host, you can specify e.g. `-p [YOURPORT]:8080` instead.
 
-Example: `docker run -it -d -p 5000:5000 -e HOST=localhost -e PORT=5000 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer`
-
-In some cases, you need to run the docker with your master node hostname instead the IP
-
-Example: `docker run -it -d -p 5000:5000 -e HOST=node-master -e PORT=5000 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer`
+Example: `docker run -it -d -p 5000:8080 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer`
 
 ## Running on ARM
 
