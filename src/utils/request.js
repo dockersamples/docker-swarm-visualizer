@@ -1,9 +1,8 @@
 import request from 'superagent';
 import _ from 'lodash';
-let { HOST,PORT } = window;
 
-var host = `http://${HOST}:${PORT}/apis/`;
-var wsHost = `ws://${HOST}:${PORT}/`;
+var host = window.location.protocol + '//' + window.location.host + '/apis/';
+var wsHost = ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + '/';
 
 function asPromise(fn){
   return new Promise((resolve,reject) => fn((err,res) => err ? reject(err) : resolve(res)))
@@ -41,7 +40,7 @@ function filterStoppedNodes (objects) {
     if(object.Status.State==="ready") {
 	    object.state = "ready";
     } else {
-	object.state = "down"	
+	object.state = "down"
     }
     object.name = object.Description.Hostname;
     object.name= object.name+" <br/>"+object.Spec.Role+
@@ -78,20 +77,20 @@ export function getWebSocket(){
   return ws;
 }
 
-export function getAllContainers(){ 
+export function getAllContainers(){
     return getUri(host+`containers/json`)
     .then(({ objects }) => filterTerminatedObjects(objects))
 }
 
-export function getAllServices(){ 
+export function getAllServices(){
     return getUri(host+`services`)
     .then(({ objects }) => filterTerminatedObjects(objects))
 }
-export function getAllTasks(){ 
+export function getAllTasks(){
     return getUri(host+`tasks`).then(({ objects }) => filterStoppedTasks(objects))
 }
 
-export function getAllNetworks(){ 
+export function getAllNetworks(){
     return getUri(host+`networks`)
     .then(({ objects }) => filterTerminatedObjects(objects))
 }
