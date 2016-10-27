@@ -148,8 +148,9 @@ addNode = (node) => {
   let cluster = _.findWhere(root,{ uuid: clusterUuid });
   if(cluster) cluster.children.push(cloned);
 },
-updateNode = (node, state) => {
+updateNode = (node, state,spec) => {
   node.state = state;
+  node.Spec = spec;
 },
 updateData = (resources) => {
   updateNodes(resources[0]);
@@ -171,10 +172,10 @@ updateNodes = (nodes) => {
           name = node.Description.Hostname;
           if(name.length>0) {
             currentnode.Description.Hostname = name ;
-            currentnode.name = name+" <br/> "+ currentnode.Spec.Role+
+            currentnode.name = name+" <br/> "+ node.Spec.Role+
             " <br/>"+(currentnode.Description.Resources.MemoryBytes/1000000000).toFixed(0)+"G RAM";
           }
-          updateNode(currentnode, node.state);
+          updateNode(currentnode, node.state, node.Spec);
         }
       }
 
