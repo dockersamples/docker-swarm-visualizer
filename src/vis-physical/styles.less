@@ -9,9 +9,11 @@
 }
 
 .statuscont(){
- &:before{
+ &:after{
+    top: -1px;
+    position: relative;
     display: inline-block;
-    margin-right: 4px;
+    margin-left: 8px;
     content: '';
     width: 8px;
     height: 8px;
@@ -21,9 +23,11 @@
 
 }
 .statuscontrun(){
-  &:before{
+  &:after{
+    top: -1px;
+    position: relative;
     display: inline-block;
-    margin-right: 4px;
+    margin-left: 8px;
     content: '';
     width: 8px;
     height: 8px;
@@ -35,46 +39,46 @@
 }
 
 .status(){
-  &:before{
+  &:after{
     display: inline-block;
-    margin-right: 4px;
+    margin-left: 8px;
     content: '';
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     background: @gray-lighter;
     border-radius: 50%;
   }
 
-  &[data-state='byon']:before{
+  &[data-state='byon']:after{
       height: 0;
       width: 0;
       margin: 0;
     }
 
-   &[data-state='animals']:before{
+   &[data-state='animals']:after{
     background: @state-1;
   }
-   &[data-state='movies']:before{
+   &[data-state='movies']:after{
     background: @state-2;
   }
-  &[data-state='deployed']:before{
+  &[data-state='deployed']:after{
     background: @state-1;
   }
-  &[data-state='deploying']:before{
+  &[data-state='deploying']:after{
     background: fade(@state-1,25%);
   }
-  &[data-state='partly-deployed']:before{
+  &[data-state='partly-deployed']:after{
     background: @state-2;
   }
-  &[data-state='down']:before{
+  &[data-state='down']:after{
     background: @red;
   }
-  &[data-state='ready']:before{
+  &[data-state='ready']:after{
     background: @green;
   }
 
-  &[data-state='terminated']:before,
-  &[data-state='empty-cluster']:before{
+  &[data-state='terminated']:after,
+  &[data-state='empty-cluster']:after{
     background: @state-2;
   }
 }
@@ -83,19 +87,18 @@
   text-align: center;
   max-width: 90%;
   margin: 0 auto;
-  color: @gray-primary;
+  color: white;
 
   .node-cluster {
-    float: left;
-    padding: 15px;
     min-width: 80px;
-    .clear();
-
   }
 
   .node{
-    float: left;
-    width: 200px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
     margin-bottom: 20px;
     margin-right: 10px;
     &:last-child{
@@ -104,47 +107,54 @@
   }
 
   .node-meta{
-    //line-height: 0;
-    font-size: 20pt;
-    text-align: center;
-    text-indent: -3px;
+    font-size: 16pt;
+    text-align: left;
     padding-bottom:10px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+
+    span {
+      display: inline-block;
+      padding: 10px;
+    }
+
     .status();
-    &:before{
+    &:after{
       position: relative;
       top: -1px;
     }
   }
 
   .node-content{
-    padding: 0 10px;
     display: flex;
-    flex-direction: column-reverse;
-    background: @gray-darkerr;
-    border: 2px solid lighten(@gray-darker,8%);
-    min-height: 500px;
-    .clear();
+    flex-wrap: wrap;
     &:last-child{
       margin-bottom: 0;
     }
   }
 
   .container {
-    //height: 152px;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    margin: 10px;
     border-radius: 3px;
-   // border: 2px solid white;
-    font-size: 10px;
+    font-size: 14px;
     cursor: pointer;
     line-height: 24px;
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    text-align: left;
+    flex: 1 0 auto;
+    max-width: 300px;
+    background: #151c21;
+    color: white;
+    strong {
+      display: inline-block;
+      min-width: 70px;
+    }
+    span {
+      display: block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
     .contname{
       .statuscont()
     }
@@ -173,10 +183,12 @@
   }
 
   .node-cluster-content {
-    background: @gray-darker;
-    border: 2px solid lighten(@gray-darker,8%);
-    padding: 15px;
-    .clear();
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
   }
   .node-cluster-content:empty {
      display: none;
@@ -193,10 +205,10 @@
       .status();
       font-size: 22px;
       line-height: 30px;
-      &:before{
+      &:after{
         width: 12px;
         height: 12px;
-        margin-right: 10px;
+        margin-left: 10px;
       }
     }
 
