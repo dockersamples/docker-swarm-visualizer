@@ -40,3 +40,7 @@ jspm_packages
 *.sh
 *.iml
 
+# Idea project folder
+.idea
+
+.DS_Store

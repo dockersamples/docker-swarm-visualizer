@@ -32,29 +32,6 @@ let nodeOrContainerExists = (arr, value) => {
   return false;
 };
 
-let strToHash = (str) => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  return hash;
-};
-
-let hashToHexColor = (hash) => {
-  let color = "#";
-  for (var i = 0; i < 3; ) {
-    color += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2);
-  }
-  return color;
-}
-
-let stringToColor = (str) => {
-  let hash = strToHash(str);
-  let color = hashToHexColor(hash);
-  return color;
-};
-
-
 
 let physicalStructProvider = ([initialNodes, initialContainers]) => {
   let containers = _.map(initialContainers, _.cloneDeep);
@@ -69,7 +46,6 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
     var node = _.find(cluster.children,{ ID:NodeID });
     if(!node) return;
     var dt = new Date(cloned.UpdatedAt);
-    var color =  stringToColor(cloned.ServiceID);
     let imageNameRegex = /([^/]+?)(\:([^/]+))?$/;
     let imageNameMatches = imageNameRegex.exec(cloned.Spec.ContainerSpec.Image);
     let tagName = imageNameMatches[3];
@@ -79,16 +55,16 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
 
 
 
-    let imageTag ="<div style='height: 100%; padding: 5px 5px 5px 5px; border: 2px solid "+color+"'>"+
-        "<span class='contname' style='color: white; font-weight: bold;font-size: 12px'>"+ imageNameMatches[1] +"</span>"+
-        "<br/> tag : " + (tagName ? tagName : "latest") +
-        "<br/>" + (cloned.Spec.ContainerSpec.Args?" cmd : "+cloned.Spec.ContainerSpec.Args+"<br/>" : "" ) +
-        " updated : " + dateStamp +
-        "<br/>"+ cloned.Status.ContainerStatus.ContainerID +
-        "<br/> state : "+startState +
+    let imageTag = "<div style='height: 100%; padding: 16px;border: 2px solid rgba(255, 255, 255, 0.25);'>"+
+        "<span class='contname' style='color: white; font-weight: bold;font-size: 16px'>"+ imageNameMatches[1] + "</span>" +
+        "<span><strong>Tag :</strong> " + (tagName ? tagName : "latest") + "</span>" +
+        "<span>" + (cloned.Spec.ContainerSpec.Args?" <strong>Cmd :</strong> " + cloned.Spec.ContainerSpec.Args + "</span><span>" : "" ) +
+        "<strong>Updated :</strong> " + dateStamp + "</span>" +
+        "<span><strong>Id :</strong> " + cloned.Status.ContainerStatus.ContainerID + "</span>" +
+        "<span><strong>State :</strong> " + startState + "</span>" +
         "</div>";
 
-    if (node.Spec.Role=='manager')  {
+    if (node.Spec.Role == 'manager')  {
       let containerlink = window.location.href+  "apis/containers/"+cloned.Status.ContainerStatus.ContainerID + "/json";
       cloned.link = containerlink;
     }
@@ -170,10 +146,10 @@ updateNodes = (nodes) => {
       for (let currentnode of currentnodelist) {
         if (node.ID == currentnode.ID) {
           name = node.Description.Hostname;
-          if(name.length>0) {
+          if(name.length > 0) {
             currentnode.Description.Hostname = name ;
-            currentnode.name = name+" <br/> "+ node.Spec.Role+
-            " <br/>"+(currentnode.Description.Resources.MemoryBytes/1000000000).toFixed(0)+"G RAM";
+            currentnode.name = "<span>" + name + "</span><span>" + node.Spec.Role +
+            "</span><span>" + (currentnode.Description.Resources.MemoryBytes/1000000000).toFixed(0) + "G RAM</span>";
           }
           updateNode(currentnode, node.state, node.Spec);
         }
