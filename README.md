@@ -1,4 +1,4 @@
-This project is a fork from [ManoMarks](https://github.com/ManoMarks/docker-swarm-visualizer) with a different style.
+This project is a fork from [ManoMarks](https://github.com/ManoMarks/docker-swarm-visualizer) with an improved style. Thanks [@giovannetti-eric](https://github.com/giovannetti-eric) for his help.
 
 ![Sample image of  nodes with data](./nodes.png)
 
