@@ -42,3 +42,5 @@ jspm_packages
 
 # Idea project folder
 .idea
+
+.DS_Store
