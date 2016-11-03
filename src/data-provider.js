@@ -8,6 +8,7 @@ import {
     getAllContainers,
     getAllNodes,
     getAllTasks,
+    getAllServices,
     getAllNodeClusters,
     getWebSocket
     } from './utils/request';
@@ -70,6 +71,7 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
     if(!node) return;
     var dt = new Date(cloned.UpdatedAt);
     var color =  stringToColor(cloned.ServiceID);
+    let serviceName = cloned.ServiceName;
     let imageNameRegex = /([^/]+?)(\:([^/]+))?$/;
     let imageNameMatches = imageNameRegex.exec(cloned.Spec.ContainerSpec.Image);
     let tagName = imageNameMatches[3];
@@ -80,7 +82,8 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
 
 
     let imageTag ="<div style='height: 100%; padding: 5px 5px 5px 5px; border: 2px solid "+color+"'>"+
-        "<span class='contname' style='color: white; font-weight: bold;font-size: 12px'>"+ imageNameMatches[1] +"</span>"+
+        "<span class='contname' style='color: white; font-weight: bold;font-size: 12px'>"+ serviceName +"</span>"+
+        "<br/> image : " + imageNameMatches[0] +
         "<br/> tag : " + (tagName ? tagName : "latest") +
         "<br/>" + (cloned.Spec.ContainerSpec.Args?" cmd : "+cloned.Spec.ContainerSpec.Args+"<br/>" : "" ) +
         " updated : " + dateStamp +
@@ -100,7 +103,7 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
   });
 },
 
-updateContainer = (container) => {
+updateContainer = (container, services) => {
   let {uuid, node} = container;
   let [nodeUuid] = uuidRegExp.exec(node);
   _.find(root,(cluster) => {
@@ -155,7 +158,7 @@ updateNode = (node, state,spec) => {
 updateData = (resources) => {
   updateNodes(resources[0]);
 
-  updateContainers(resources[1]);
+  updateContainers(resources[1], resources[2]);
   data();
 },
 updateNodes = (nodes) => {
@@ -187,11 +190,12 @@ updateNodes = (nodes) => {
     }
   }
 },
-updateContainers = (containers) => {
+updateContainers = (containers, services) => {
   let nodes = root[0].children;
   for (let container of containers) {
     let contNodeId = container.NodeID;
-
+    let service = _.find(services, function(o) { return o.ID == container.ServiceID; });
+    container.ServiceName = service.Spec.Name;
     for (var i=0, iLen=nodes.length; i<iLen; i++) {
       if (nodes[i].ID == contNodeId) {
         while(nodeOrContainerExists(nodes[i].children,container.ID)){
@@ -242,7 +246,8 @@ class DataProvider extends EventEmitter {
     //console.log(STARTED);
     var clusterInit = Promise.all([
           getAllNodes(),
-          getAllTasks()
+          getAllTasks(),
+          getAllServices()
         ])
             .then((resources) => {
           _.remove(resources[1],(nc) => nc.state === 'Empty cluster' || nc.state === 'Terminated');
@@ -264,7 +269,8 @@ reload() {
   // console.log(STARTED);
   var clusterInit = Promise.all([
         getAllNodes(),
-        getAllTasks()
+        getAllTasks(),
+        getAllServices()
       ])
           .then((resources) => {
         _.remove(resources[1],(nc) => nc.state === 'Empty cluster' || nc.state === 'Terminated');
