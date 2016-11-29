@@ -176,7 +176,7 @@ updateNodes = (nodes) => {
           if(name.length>0) {
             currentnode.Description.Hostname = name ;
             currentnode.name = name+" <br/> "+ node.Spec.Role+
-            " <br/>"+(currentnode.Description.Resources.MemoryBytes/1000000000).toFixed(0)+"G RAM";
+            " <br/>"+(currentnode.Description.Resources.MemoryBytes/1024/1024/1024).toFixed(0)+"G RAM";
           }
           updateNode(currentnode, node.state, node.Spec);
         }
