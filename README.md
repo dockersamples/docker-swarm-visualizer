@@ -48,7 +48,29 @@ If you would like to build the image from source run the following command:
 $ docker build -f Dockerfile.arm -t visualizer-arm:latest .
 ```
 
+## Running on Windows
 
+[@StefanScherer](https://github.com/StefanScherer) has pushed an image to the
+Docker Hub as `stefanscherer/visualizer-windows:latest` it will run the code
+in a Windows nanoserver container.
+
+If you would like to build the image from source run the following command:
+
+```
+$ docker build -f Dockerfile.windows -t visualizer-windows:latest .
+```
+
+On Windows you cannot use `-v` to bind mount the named pipe into the container.
+Your Docker engine has to listen to a TCP port, eg. 2375 and you have to
+set the `DOCKER_HOST` environment variable running the container.
+
+```
+$ip=(Get-NetIPAddress -AddressFamily IPv4 `
+   | Where-Object -FilterScript { $_.InterfaceAlias -Eq "vEthernet (HNS Internal NIC)" } `
+   ).IPAddress
+
+docker run -d -p 8080:8080 -e DOCKER_HOST=${ip}:2375 --name=visualizer stefanscherer/visualizer-windows
+```
 
 TODO:
 * Take out or fix how dist works
