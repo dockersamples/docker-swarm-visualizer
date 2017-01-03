@@ -5,6 +5,7 @@ var _  = require('lodash');
 var superagent = require('superagent');
 var net = require('net');
 var http = require('http');
+var https = require('https');
 var WS = require('ws');
 
 var WebSocketServer = WS.Server;
@@ -36,6 +37,15 @@ console.log(process.env.DOCKER_HOST)
 	   console.log(err.stack)
      }
 	}
+  var cert_path;
+  if (process.env.DOCKER_TLS_VERIFY) {
+    if (process.env.DOCKER_CERT_PATH) {
+      cert_path = process.env.DOCKER_CERT_PATH;
+    } else {
+      cert_path = (process.env.HOME || process.env.USERPROFILE) + "/.docker"
+    }
+  }
+
   var wss = new WebSocketServer({server: server});
 
   app.get('/apis/*', function(req, response) {
@@ -46,7 +56,16 @@ console.log(process.env.DOCKER_HOST)
 		  method: 'GET'
 	  }
 
-    if(docker_host) {
+    var request = http.request;
+
+    if (cert_path) {
+        request = https.request;
+        options.ca = fs.readFileSync(cert_path + '/ca.pem');
+        options.cert = fs.readFileSync(cert_path + '/cert.pem');
+        options.key = fs.readFileSync(cert_path + '/key.pem');
+    }
+
+    if (docker_host) {
         options.host = docker_host;
 		    options.port = docker_port;
 	  }
@@ -54,7 +73,7 @@ console.log(process.env.DOCKER_HOST)
 		    options.socketPath = '/var/run/docker.sock';
     }
 
-    var req = http.request(options, (res) => {
+    var req = request(options, (res) => {
       var data = '';
       res.on('data', (chunk) => {
         data += chunk;

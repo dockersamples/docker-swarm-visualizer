@@ -72,6 +72,19 @@ $ip=(Get-NetIPAddress -AddressFamily IPv4 `
 docker run -d -p 8080:8080 -e DOCKER_HOST=${ip}:2375 --name=visualizer stefanscherer/visualizer-windows
 ```
 
+### Connect to a TLS secured Docker engine
+
+To work with a TLS secured Docker engine on Windows, set the environment variable `DOCKER_TLS_VERIFY` and
+bind mount the TLS certificates into the container.
+ 
+```
+$ip=(Get-NetIPAddress -AddressFamily IPv4 `
+   | Where-Object -FilterScript { $_.InterfaceAlias -Eq "vEthernet (HNS Internal NIC)" } `
+   ).IPAddress
+
+docker run -d -p 8080:8080 -e DOCKER_HOST=${ip}:2376 -e DOCKER_TLS_VERIFY=1 -v "$env:USERPROFILE\.docker:C:\Users\ContainerAdministrator\.docker" --name=visualizer stefanscherer/visualizer-windows
+```
+
 TODO:
 * Take out or fix how dist works
 * Comment much more extensively
