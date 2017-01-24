@@ -46,23 +46,22 @@ RUN adduser -D -u 1000 node \
  WORKDIR /app
 
 # Only run npm install if these files change.
- ADD ./package.json /app/package.json
+ADD ./package.json /app/package.json
 
 # Install dependencies
- RUN npm install --unsafe-perm=true
+RUN npm install --unsafe-perm=true
 
 # Add the rest of the sources
- ADD . /app
+ADD . /app
 
 # Build the app
- RUN npm run dist
+RUN npm run dist
 
 # Number of milliseconds between polling requests. Default is 200.
- ENV MS 200
+ENV MS 200
 
- EXPOSE 8080
+EXPOSE 8080
 
- RUN npm install
+RUN npm install
 
- CMD ["npm","start"]
-# CMD ["/bin/ash"]
+CMD ["npm","start"]
