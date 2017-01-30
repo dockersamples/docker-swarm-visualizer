@@ -130,7 +130,6 @@ data = () => {
 addNodeCluster = (nodeCluster) => {
   var cloned = Object.assign({},nodeCluster);
   cloned.children = [];
-  console.log(cloned);
   root.push(cloned);
 },
 
@@ -146,7 +145,6 @@ updateNodeCluster = (nodeCluster) => {
 addNode = (node) => {
   let cloned = Object.assign({},node);
   cloned.children = [];
-  console.log(cloned);
   let clusterUuid = "clusterid";
   let cluster = _.findWhere(root,{ uuid: clusterUuid });
   if(cluster) cluster.children.push(cloned);
@@ -162,7 +160,6 @@ updateData = (resources) => {
   data();
 },
 updateNodes = (nodes) => {
-  //console.log(nodes);
   let currentnodelist = root[0].children;
   for (let node of nodes) {
     if(!nodeOrContainerExists(currentnodelist,node.ID)) {
@@ -192,28 +189,21 @@ updateNodes = (nodes) => {
 },
 updateContainers = (containers, services) => {
   let nodes = root[0].children;
+  // clearn all current children before rendering
+  for(let node of nodes) {
+    node.children = [];
+  }
+
   for (let container of containers) {
     let contNodeId = container.NodeID;
     let service = _.find(services, function(o) { return o.ID == container.ServiceID; });
     container.ServiceName = service.Spec.Name;
     for (var i=0, iLen=nodes.length; i<iLen; i++) {
       if (nodes[i].ID == contNodeId) {
-        while(nodeOrContainerExists(nodes[i].children,container.ID)){
-          let index = nodes[i].children.indexOf(container);
-          nodes[i].children.splice(index,1);
-        }
         addContainer(container);
       }
     }
 
-  }
-  for(let node of nodes) {
-    for(let container of node.children) {
-      if(!nodeOrContainerExists(containers,container.ID)){
-        let index = node.children.indexOf(container);
-        node.children.splice(index,1);
-      }
-    }
   }
 
 };
