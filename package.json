@@ -53,8 +53,8 @@
     "request": "^2.65.0",
     "superagent": "^1.4.0",
     "svg-inline-loader": "^0.3.0",
-    "ws":"latest",
-    "express-ws":"latest"
+    "ws":"1.1.0",
+    "express-ws":"2.0.0"
 
   }
 }
