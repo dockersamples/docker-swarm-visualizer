@@ -80,6 +80,7 @@ console.log(process.env.DOCKER_HOST)
       });
       res.on('end', () => {
         jsonData['objects'] = JSON.parse(data.toString());
+        console.log(jsonData['objects'][0]);
         response.json(jsonData);
       });
     });
