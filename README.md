@@ -6,11 +6,11 @@
 *** note ***
 _This only works with Docker Swarm Mode in Docker Engine 1.12.0 and later. It does not work with the separate Docker Swarm project_
 
-Thanks to all the contributors, and a special thanks to [@DovAmir](https://github.com/DovAmir) and [@alexellis](https://github.com/alexellis) for their big contributions.
+This project was originally created by [Francisco Miranda](https://github.com/maroshii) for the 2015 DockerCon EU keynote. It was adapted to be used for the 2016 DockerCon US keynote showcasing [Docker swarm mode](https://docs.docker.com/engine/swarm/). Since then the community has generously contributed many updates. Thanks to all the contributors, and a special thanks to [@DovAmir](https://github.com/DovAmir) and [@alexellis](https://github.com/alexellis) for their big contributions.
 
 Demo container that displays Docker services running on a Docker Swarm in a diagram.
 
-This works only with [Docker Swarm Mode](https://docs.docker.com/engine/swarm/) which was introduced in Docker 1.12. These instructions presume you are running on the master node and you already have a Swarm running.
+This works only with [Docker swarm mode](https://docs.docker.com/engine/swarm/) which was introduced in Docker 1.12. These instructions presume you are running on the master node and you already have a Swarm running.
 
 Each node in the swarm will show all tasks running on it. When a service goes down it'll be removed. When a node goes down it won't, instead the circle at the top will turn red to indicate it went down. Tasks will be removed.
 Occasionally the Remote API will return incomplete data, for instance the node can be missing a name. The next time info for that node is pulled, the name will update.
