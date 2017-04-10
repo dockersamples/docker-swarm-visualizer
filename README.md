@@ -18,13 +18,13 @@ Occasionally the Remote API will return incomplete data, for instance the node c
 To run:
 
 ```
-$ docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer
+$ docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock dockersamples/visualizer
 ```
 
 If port 8080 is already in use on your host, you can specify e.g. `-p [YOURPORT]:8080` instead. Example:
 
 ```
-$ docker run -it -d -p 5000:8080 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer
+$ docker run -it -d -p 5000:8080 -v /var/run/docker.sock:/var/run/docker.sock dockersamples/visualizer
 ```
 
 To run in a docker swarm:
@@ -35,7 +35,7 @@ $ docker service create \
   --publish=8080:8080/tcp \
   --constraint=node.role==manager \
   --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-  manomarks/visualizer
+  dockersamples/visualizer
 ```
 
 ## Running on ARM
