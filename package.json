@@ -18,7 +18,7 @@
   },
   "repository": "https://github.com/manomarks/docker-swarm-visualizer",
   "keywords": ["Docker","Swarm","D3","Node Visualization"],
-  "contributors": [{"name": "Francisco Miranda", "name": "Mano Marks"}]
+  "contributors": [{"name": "Francisco Miranda", "name": "Mano Marks"}],
   "devDependencies": {
     "babel-core": "^5.8.38",
     "babel-loader": "^5.4.2",
