@@ -5,6 +5,7 @@
 # Docker Swarm Visualizer
 *** note ***
 _This only works with Docker Swarm Mode in Docker Engine 1.12.0 and later. It does not work with the separate Docker Swarm project_
+**DO NOT RUN THIS ANYWHERE NEAR PRODUCTION. ENSURE FIREWALL PROTECTION**
 
 This project was originally created by [Francisco Miranda](https://github.com/maroshii) for the 2015 DockerCon EU keynote. It was adapted to be used for the 2016 DockerCon US keynote showcasing [Docker swarm mode](https://docs.docker.com/engine/swarm/). Since then the community has generously contributed many updates. Thanks to all the contributors, and a special thanks to [@DovAmir](https://github.com/DovAmir) and [@alexellis](https://github.com/alexellis) for their big contributions.
 
