@@ -42,11 +42,22 @@ $ docker service create \
 
 [@alexellisuk](https://twitter.com/alexellisuk) has pushed an image to the Docker Hub as `alexellis2/visualizer-arm:latest` it will run the code on an ARMv6 or ARMv7 device such as the Raspberry Pi.
 
+```
+$ docker service create \
+  --name=viz \
+  --publish=8080:8080/tcp \
+  --constraint=node.role==manager \
+  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+  alexellis2/visualizer-arm:0.4
+```
+
 If you would like to build the image from source run the following command:
 
 ```
 $ docker build -f Dockerfile.arm -t visualizer-arm:latest .
 ```
+
+[View on Docker Hub](https://hub.docker.com/r/alexellis2/visualizer-arm/tags/)
 
 ## Running on Windows
 
