@@ -27,6 +27,12 @@ If port 8080 is already in use on your host, you can specify e.g. `-p [YOURPORT]
 $ docker run -it -d -p 5000:8080 -v /var/run/docker.sock:/var/run/docker.sock dockersamples/visualizer
 ```
 
+To run with a different context root (useful when running behind an external load balancer):
+
+```bash
+$ docker run -it -d -e CTX_ROOT=/visualizer -v /var/run/docker.sock:/var/run/docker.sock dockersamples/visualizer
+```
+
 To run in a docker swarm:
 
 ```

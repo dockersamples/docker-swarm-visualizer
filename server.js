@@ -14,14 +14,24 @@ var app = express();
 var ms = process.env.MS || 5000;
 process.env.MS=ms
 
-app.use(express.static('dist'));
+var ctxRoot = process.env.CTX_ROOT || '/';
+
+if ( !ctxRoot.startsWith('/') ) {
+	ctxRoot = '/' + ctxRoot;
+}
+
+if ( !ctxRoot.endsWith('/') ) {
+	ctxRoot = ctxRoot + '/';
+}
+
+app.use(ctxRoot, express.static('dist'));
 
 var server = app.listen(8080, function () {
     indexData = _.template(fs.readFileSync('index.tpl'))(process.env);
 
 });
 
-app.get('/', function(req, res) {
+app.get(ctxRoot, function(req, res) {
   res.send(indexData);
 });
 
@@ -48,7 +58,7 @@ console.log(process.env.DOCKER_HOST)
 
   var wss = new WebSocketServer({server: server});
 
-  app.get('/apis/*', function(req, response) {
+  app.get(ctxRoot + 'apis/*', function(req, response) {
       var path = req.params[0];
       var jsonData={};
       var options = {
