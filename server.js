@@ -6,6 +6,7 @@ var superagent = require('superagent');
 var net = require('net');
 var http = require('http');
 var https = require('https');
+var basicauth = require('basicauth-middleware');
 var WS = require('ws');
 
 var WebSocketServer = WS.Server;
@@ -28,7 +29,6 @@ app.use(ctxRoot, express.static('dist'));
 
 var server = app.listen(8080, function () {
     indexData = _.template(fs.readFileSync('index.tpl'))(process.env);
-
 });
 
 app.get(ctxRoot, function(req, res) {
@@ -58,7 +58,9 @@ console.log(process.env.DOCKER_HOST)
 
   var wss = new WebSocketServer({server: server});
 
-  app.get(ctxRoot + 'apis/*', function(req, response) {
+  var authMiddleware = basicauth(process.env.USERNAME, process.env.PASSWORD, 'Docker Swarm Visualizer');
+
+  app.get(ctxRoot + 'apis/*', authMiddleware, function(req, response) {
       var path = req.params[0];
       var jsonData={};
       var options = {
