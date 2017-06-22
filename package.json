@@ -43,9 +43,11 @@
   },
   "dependencies": {
     "animate.css": "^3.4.0",
+    "basicauth-middleware": "^2.0.0",
     "d3": "^3.5.7",
     "eventemitter3": "^1.1.1",
     "express": "^4.13.3",
+    "express-ws": "2.0.0",
     "less": "^2.5.3",
     "less-loader": "^2.0.0",
     "lodash": "^3.10.1",
@@ -53,8 +55,6 @@
     "request": "^2.65.0",
     "superagent": "^1.4.0",
     "svg-inline-loader": "^0.3.0",
-    "ws":"1.1.0",
-    "express-ws":"2.0.0"
-
+    "ws": "1.1.0"
   }
 }
