@@ -33,4 +33,6 @@ ENV MS=1000 CTX_ROOT=/
 
 EXPOSE 8080
 
+HEALTHCHECK CMD wget -q -O > /dev/null localhost:8080 || exit 1
+
 CMD ["npm","start"]

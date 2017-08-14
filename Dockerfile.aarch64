@@ -21,4 +21,6 @@ EXPOSE 8080
 
 RUN npm install
 
+HEALTHCHECK CMD wget -q -O > /dev/null localhost:8080 || exit 1
+
 CMD ["npm","start"]
