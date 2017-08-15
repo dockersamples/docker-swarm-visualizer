@@ -35,8 +35,9 @@ app.get(ctxRoot, function(req, res) {
   res.send(indexData);
 });
 
-console.log(process.env.DOCKER_HOST)
-
+if (process.env.DOCKER_HOST) {
+  console.log("Docker Host: " + process.env.DOCKER_HOST)
+}
   if(process.env.DOCKER_HOST) {
      try {
 	   dh = process.env.DOCKER_HOST.split(":");
