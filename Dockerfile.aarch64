@@ -21,4 +21,6 @@ EXPOSE 8080
 
 RUN npm install
 
+HEALTHCHECK CMD node healthcheck.js || exit 1
+
 CMD ["npm","start"]

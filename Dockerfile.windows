@@ -19,4 +19,6 @@ ENV MS 200
 
 EXPOSE 8080
 
+HEALTHCHECK CMD node healthcheck.js || exit 1
+
 CMD ["npm.cmd","start"]

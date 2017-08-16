@@ -23,6 +23,7 @@ ADD ./src/* /app/src/
 ADD ./create-index.js /app
 ADD ./index.tpl /app
 ADD ./server.js /app
+ADD ./healthcheck.js /app
 COPY --from=dist /app/dist/* /app/dist/
 COPY --from=dist /app/package.json /app/package.json
 RUN npm install
@@ -32,5 +33,7 @@ RUN npm install
 ENV MS=1000 CTX_ROOT=/
 
 EXPOSE 8080
+
+HEALTHCHECK CMD node healthcheck.js || exit 1
 
 CMD ["npm","start"]
