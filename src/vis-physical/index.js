@@ -16,7 +16,8 @@ var vis = d3.select('#app')
 var wrapper = vis.append('div')
     .classed('wrapper', true);
 
-let filterDiv = wrapper.append('div');
+let filterDiv = wrapper.append('div')
+    .attr('id', 'filter-wrapper');
 
 let filterInput = filterDiv.append('input')
     .attr('id', 'filter')
