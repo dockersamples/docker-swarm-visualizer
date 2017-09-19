@@ -15,6 +15,12 @@ var vis = d3.select('#app')
 var wrapper = vis.append('div')
     .classed('wrapper', true);
 
+let filterDiv = wrapper.append('div');
+
+let filterInput = filterDiv.append('input')
+    .attr('id', 'filter')
+    .attr('placeholder', 'filter containers');
+
 function removeVis() {
   cluster = wrapper.selectAll('.node-cluster')
   cluster.remove();
