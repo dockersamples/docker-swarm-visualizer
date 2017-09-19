@@ -29,6 +29,18 @@ tabPhysical.addEventListener('click',() => {
   document.body.className = 'tab2';
 });
 
+tabPhysical.addEventListener('click', () => {
+  let filterDiv = document.querySelector('#filter-wrapper');
+  if (filterDiv.classList.value.indexOf('hide') >= 0) {
+    filterDiv.classList.remove('hide');
+    filterDiv.classList.add('show');
+  }
+  else {
+    filterDiv.classList.add('hide');
+    filterDiv.classList.remove('show');
+  }
+});
+
 /* Enable polling */
 function reload(){
   provider.reload();
