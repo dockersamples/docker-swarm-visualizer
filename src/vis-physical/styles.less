@@ -219,19 +219,19 @@
 }
 
 @keyframes hide {
-  0% { opacity: 1; transform: scale(1); max-height: 500px; }
-  100% { opacity: 0; transform: scale(0); max-height: 0; }
+    0% { opacity: 1; transform: scale(1); max-height: 500px; }
+  100% { opacity: 0; transform: scale(0); max-height: 0; margin: 0; }
 }
 
 @keyframes show {
-  0% { opacity: 0; transform: scale(0); max-height: 0; }
+    0% { opacity: 0; transform: scale(0); max-height: 0; margin: 0; }
   100% { opacity: 1; transform: scale(1); max-height: 500px; }
 }
 
-.hide {
+#vis-physical .container.hide {
   animation: hide .5s forwards;
 }
 
-.show {
+#vis-physical .container.show {
   animation: show .5s forwards;
 }
