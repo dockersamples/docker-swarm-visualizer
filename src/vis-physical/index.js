@@ -22,7 +22,7 @@ let filterInput = filterDiv.append('input')
     .attr('id', 'filter')
     .attr('placeholder', 'filter containers');
 
-filterInput.addEventListener('keyup', filterContainers);
+filterInput.on('keyup', filterContainers);
 
 function removeVis() {
   cluster = wrapper.selectAll('.node-cluster')

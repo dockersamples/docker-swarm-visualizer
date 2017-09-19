@@ -5,9 +5,11 @@ export function filterContainers() {
     let spanText = containers[i].querySelector('span').innerHTML;
     if (spanText.indexOf(filterValue) >= 0) {
       containers[i].classList.remove('hide');
+      containers[i].classList.add('show');
     }
     else {
       containers[i].classList.add('hide');
+      containers[i].classList.remove('show');
     }
   }
 }
