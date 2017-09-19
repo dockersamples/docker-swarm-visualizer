@@ -1,7 +1,7 @@
 export function filterContainers() {
 
   // Fetch DOM elements, break each word in input filter.
-  let filterValues = document.querySelector('#filter').value.split(' ');
+  let filterValues = document.querySelector('#filter').value.trim().split(' ');
   let containers = document.querySelectorAll('.container');
 
   // Iterate through each container.
