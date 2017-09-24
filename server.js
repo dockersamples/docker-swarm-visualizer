@@ -78,10 +78,11 @@ if (process.env.DOCKER_HOST) {
 
     if (docker_host) {
         options.host = docker_host;
-		    options.port = docker_port;
-	  }
-	  else {
-		    options.socketPath = '/var/run/docker.sock';
+        options.port = docker_port;
+    } else if (process.platform === 'win32') {
+        options.socketPath = '\\\\.\\pipe\\docker_engine';
+    } else {
+        options.socketPath = '/var/run/docker.sock';
     }
 
     var req = request(options, (res) => {
