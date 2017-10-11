@@ -5,6 +5,7 @@ import d3 from 'd3';
 import _ from 'lodash';
 
 import { uuidRegExp, capitalize } from '../utils/helpers';
+import { filterContainers} from "../utils/filter-containers";
 
 var { innerWidth:W, innerHeight:H } = window;
 
@@ -14,6 +15,15 @@ var vis = d3.select('#app')
 
 var wrapper = vis.append('div')
     .classed('wrapper', true);
+
+let filterDiv = wrapper.append('div')
+    .attr('id', 'filter-wrapper');
+
+let filterInput = filterDiv.append('input')
+    .attr('id', 'filter')
+    .attr('placeholder', 'filter containers');
+
+filterInput.on('keyup', filterContainers);
 
 function removeVis() {
   cluster = wrapper.selectAll('.node-cluster')
