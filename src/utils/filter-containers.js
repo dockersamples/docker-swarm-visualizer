@@ -9,7 +9,7 @@ function filterHistory() {
   if (typeof filterTimeout !== 'undefined') {
     clearTimeout(filterTimeout);
   }
-  filterTimeout = setTimeout(filterTimeoutCallback, 2000);
+  filterTimeout = setTimeout(filterTimeoutCallback, 500);
 }
 
 function filterMap(element) {
