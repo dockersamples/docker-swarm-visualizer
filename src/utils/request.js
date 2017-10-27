@@ -1,7 +1,7 @@
 import request from 'superagent';
 import _ from 'lodash';
 
-var host = window.location.href + 'apis/';
+var host = window.location.href.split('?')[0].split('#')[0] + 'apis/';
 var wsHost = ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + window.location.pathname;
 
 function asPromise(fn){
