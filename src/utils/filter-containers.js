@@ -13,7 +13,7 @@ function filterHistory() {
 }
 
 function filterMap(element) {
-  let component = element.split('&');
+  let component = element.split('=');
   this[component[0]] = component[1];
   return this;
 }
@@ -71,7 +71,7 @@ export function filterOnLoad() {
     .map(filterMap, {})[0];
 
   if (searchObj.filter) {
-    filterInput.value = search;
+    filterInput.value = searchObj.filter;
     console.log('about to call filterContainers');
     console.log(typeof filterContainers);
     filterContainers();
