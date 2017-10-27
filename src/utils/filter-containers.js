@@ -74,6 +74,6 @@ export function filterOnLoad() {
     filterInput.value = searchObj.filter;
     console.log('about to call filterContainers');
     console.log(typeof filterContainers);
-    filterContainers();
+    setTimeout(filterContainers, 2000);
   }
 }
