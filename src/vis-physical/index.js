@@ -5,7 +5,7 @@ import d3 from 'd3';
 import _ from 'lodash';
 
 import { uuidRegExp, capitalize } from '../utils/helpers';
-import { filterContainers} from "../utils/filter-containers";
+import { filterContainers, filterOnLoad } from "../utils/filter-containers";
 
 var { innerWidth:W, innerHeight:H } = window;
 
@@ -24,6 +24,7 @@ let filterInput = filterDiv.append('input')
     .attr('placeholder', 'filter containers');
 
 filterInput.on('keyup', filterContainers);
+filterOnLoad();
 
 function removeVis() {
   cluster = wrapper.selectAll('.node-cluster')

@@ -1,3 +1,23 @@
+let filterTimeout;
+
+function filterTimeoutCallback() {
+  let newHistory = encodeURI(document.querySelector('#filter').value);
+  history.pushState({}, '', '?filter=' + newHistory);
+}
+
+function filterHistory() {
+  if (typeof filterTimeout !== 'undefined') {
+    clearTimeout(filterTimeout);
+  }
+  filterTimeout = setTimeout(filterTimeoutCallback, 500);
+}
+
+function filterMap(element) {
+  let component = element.split('=');
+  this[component[0]] = component[1];
+  return this;
+}
+
 export function filterContainers() {
 
   // Fetch DOM elements, break each word in input filter.
@@ -30,5 +50,30 @@ export function filterContainers() {
       containers[i].classList.remove('hide');
       containers[i].classList.add('show');
     }
+  }
+  filterHistory();
+}
+
+export function filterOnLoad() {
+  let filterInput = document.querySelector('#filter');
+  if (!filterInput) {
+    setTimeout(filterOnLoad, 1000);
+    return;
+  }
+  let search = decodeURIComponent(location.search);
+  if (!search) {
+    return;
+  }
+
+  let searchObj = search
+    .substring(1)
+    .split('&')
+    .map(filterMap, {})[0];
+
+  if (searchObj.filter) {
+    filterInput.value = searchObj.filter;
+    console.log('about to call filterContainers');
+    console.log(typeof filterContainers);
+    setTimeout(filterContainers, 2000);
   }
 }
