@@ -1,4 +1,4 @@
-FROM alexellis2/nodejs-armhf:6.9.2
+FROM arm32v6/node:9-alpine
 
 WORKDIR /app
 
