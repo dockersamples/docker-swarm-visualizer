@@ -34,6 +34,6 @@ ENV MS=1000 CTX_ROOT=/
 
 EXPOSE 8080
 
-HEALTHCHECK CMD node healthcheck.js || exit 1
+HEALTHCHECK CMD node /app/healthcheck.js || exit 1
 
 CMD ["npm","start"]
