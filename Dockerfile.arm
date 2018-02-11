@@ -1,4 +1,4 @@
-FROM arm32v6/node:9-alpine
+FROM arm32v6/node:8-alpine
 
 WORKDIR /app
 
