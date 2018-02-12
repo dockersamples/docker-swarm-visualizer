@@ -71,7 +71,7 @@ $ docker service create \
 If you would like to build the image from source run the following command:
 
 ```
-$ docker build -f Dockerfile -t visualizer-arm:latest .
+$ docker build -t visualizer-arm:latest .
 ```
 
 [View on Docker Hub](https://hub.docker.com/r/alexellis2/visualizer-arm/tags/)
@@ -118,7 +118,7 @@ docker run -d -p 8080:8080 -e DOCKER_HOST=${ip}:2376 -e DOCKER_TLS_VERIFY=1 -v "
 
 To build an up-to-date image for any architecture supported by [node:8-alpine](https://hub.docker.com/_/node/) (currently `amd64`, `arm32v6`, `arm32v7`, `arm64v8`, `i386`, `ppc64le` and `s390x`), execute the following command on a device of your target architecture:
 ```
-$ docker build -f Dockerfile -t visualizer-custom:latest .
+$ docker build -t visualizer-custom:latest .
 ```
 
 Afterwards you can start visualizer by using any of the commands stated [above](#docker-swarm-visualizer). Just replace `dockersamples/visualizer` with `visualizer-custom`. For example:
