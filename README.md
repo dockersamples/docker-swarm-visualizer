@@ -55,14 +55,18 @@ $ docker service create \
   --publish=8080:8080/tcp \
   --constraint=node.role==manager \
   --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-  alexellis2/visualizer-arm:0.4
+  alexellis2/visualizer-arm:latest
 ```
+
+* Update/rebuild the image:
 
 If you would like to build the image from source run the following command:
 
 ```
 $ docker build -f Dockerfile.arm -t visualizer-arm:latest .
 ```
+
+> Make sure you do this on a Raspberry Pi directly.
 
 [View on Docker Hub](https://hub.docker.com/r/alexellis2/visualizer-arm/tags/)
 
