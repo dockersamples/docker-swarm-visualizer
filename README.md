@@ -49,7 +49,7 @@ $ docker service create \
 
 The main `dockersamples/visualizer` image supports **linux/amd64**.
 
-**For ARM**, there is a pre-built image available. See [Running on ARM](#running-on-arm).
+**For armhf**, there is a pre-built image available. See [Running on ARM](#running-on-arm).
 
 **For Windows**, there is a separate `Dockerfile.windows` and image. See [Running on Windows](#running-on-windows).
 
