@@ -17,7 +17,8 @@ var wrapper = vis.append('div')
     .classed('wrapper', true);
 
 let filterDiv = wrapper.append('div')
-    .attr('id', 'filter-wrapper');
+    .attr('id', 'filter-wrapper')
+    .classed('hide', true);
 
 let filterInput = filterDiv.append('input')
     .attr('id', 'filter')
