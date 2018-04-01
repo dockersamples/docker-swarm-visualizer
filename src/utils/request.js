@@ -40,7 +40,7 @@ function filterStoppedNodes (objects) {
     if(object.Status.State==="ready") {
 	    object.state = "ready";
     } else {
-	object.state = "down"
+	    object.state = "down"
     }
     object.name = object.Description.Hostname;
     object.name= object.name+" <br/>"+object.Spec.Role+
