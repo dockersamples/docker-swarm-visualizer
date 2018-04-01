@@ -169,9 +169,9 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
                             name = node.Description.Hostname;
                             if (name.length > 0) {
                                 currentnode.Description.Hostname = name;
-                                currentnode.name = name + " <br/><span class='noderole'>" + node.Spec.Role +
-                                    "</span><br/><span class='nodemem'>" + (currentnode.Description.Resources.MemoryBytes / 1024 / 1024 / 1024).toFixed(3) + "G RAM</span><br/>" +
-                                    "<span class='nodeplatform'>" + (currentnode.Description.Platform.Architecture) + "/" + (currentnode.Description.Platform.OS) + "</span>" +
+                                currentnode.name = name + " <br/><span class='noderole role_"+ node.Spec.Role + "'>" + node.Spec.Role + "</span>" +
+                                    // "<br/><span class='nodemem'>" + (currentnode.Description.Resources.MemoryBytes / 1024 / 1024 / 1024).toFixed(3) + "G RAM</span><br/>" +
+                                    // "<span class='nodeplatform'>" + (currentnode.Description.Platform.Architecture) + "/" + (currentnode.Description.Platform.OS) + "</span>" +
                                     "<div class='labelarea'>";
                                 for (var key in node.Spec.Labels) {
                                     if (node.Spec.Labels[key].length > 0) {
