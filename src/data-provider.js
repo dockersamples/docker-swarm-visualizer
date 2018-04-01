@@ -72,7 +72,7 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
                 var dt = new Date(cloned.UpdatedAt);
                 var color = stringToColor(cloned.ServiceID);
                 let serviceName = cloned.ServiceName;
-                let imageNameRegex = /((.+?\/)?([^/.:]+?)\/([^/]+?))\:([^/]+)\@([^/]+)?$/;
+                let imageNameRegex = /((.*?)??\/?([^/.:]*?)\/?([^/]+))\:([^/]+)\@([^/]+)?$/;
                 let imageNameMatches = imageNameRegex.exec(cloned.Spec.ContainerSpec.Image);
                 let tagName = imageNameMatches[5];
                 let dateStamp = (1900+dt.getYear()) + "-" + ('0' + (dt.getMonth() + 1)).slice(-2) + "-" + ('0' + dt.getDate()).slice(-2) + " " + ('0' + dt.getHours()).slice(-2) + ":" + ('0' + dt.getMinutes()).slice(-2);
@@ -80,7 +80,7 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
 
                 let imageTag = "<div style='height: 100%; padding: 4px 4px 4px 4px; border: 2px solid " + color + "'>" +
                     "<div class='row'>" + "<span class='contname' style='color: white; font-weight: bold;font-size: 12px'>" + serviceName + "</span>" + "</div>" +
-                    "<div class='row' title='" + imageNameMatches[0] + "'>" + "image: " + imageNameMatches[3] + "/"  + imageNameMatches[4]+ "</div>" +
+                    "<div class='row' title='" + imageNameMatches[1] + "'>" + "image: " + (imageNameMatches[3] ? imageNameMatches[3] + "/" : "") + imageNameMatches[4]+ "</div>" +
                     "<div class='row' title='" + imageNameMatches[6] + "'>" + "tag: " + (tagName ? tagName : "latest") + "</div>" +
                     "<div class='row'>" + (cloned.Spec.ContainerSpec.Args ? " cmd: " + cloned.Spec.ContainerSpec.Args + "<br/>" : "") + "</div>" +
                     "<div class='row'>" + " updated: " + dateStamp + "</div>" +
