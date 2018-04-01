@@ -79,6 +79,18 @@
   }
 }
 
+.statuscontent(){
+  &[data-availability='drain']{
+    background-color: @state-drain;
+  }
+  &[data-availability='pause']{
+    border-color: @state-pause;
+  }
+  &[data-availability='active']{
+    border-color: @state-active;
+  }
+}
+
 #vis-physical{
   text-align: center;
   max-width: 90%;
@@ -135,6 +147,7 @@
     background: @gray-darkerr;
     border: 2px solid lighten(@gray-darker,8%);
     min-height: 500px;
+    .statuscontent();
     .clear();
     &:last-child{
       margin-bottom: 0;

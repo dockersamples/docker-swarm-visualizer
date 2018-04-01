@@ -127,6 +127,9 @@ node
 .attr('data-state',(d) => _.kebabCase(d.state))
 .html((d) => d.name);
 
+node
+    .select('.node-content')
+    .attr('data-availability',(d) => _.kebabCase(d.Spec.Availability))
 
 container
     .classed('foreign', (d) => !d.state)
