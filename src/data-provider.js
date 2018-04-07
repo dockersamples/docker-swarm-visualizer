@@ -169,7 +169,7 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
                                 currentnode.Description.Hostname = name;
                                 currentnode.name = "<span class='row nodename'>" + name + "</span>" +
                                     "<div class='row noderole role_"+ node.Spec.Role + "'>" + node.Spec.Role + "</div>" +
-                                    "<div class='row nodeaddr'>" + node.Status.Addr + "</div>" +
+                                    // "<div class='row nodeaddr'>" + node.Status.Addr + "</div>" +
                                     // "<br/><span class='nodemem'>" + (currentnode.Description.Resources.MemoryBytes / 1024 / 1024 / 1024).toFixed(3) + "G RAM</span><br/>" +
                                     // "<span class='nodeplatform'>" + (currentnode.Description.Platform.Architecture) + "/" + (currentnode.Description.Platform.OS) + "</span>" +
                                     "<div class='labelarea'>";
