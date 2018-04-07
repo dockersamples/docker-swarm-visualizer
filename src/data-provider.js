@@ -55,8 +55,6 @@ let stringToColor = (str) => {
     return color;
 };
 
-
-
 let physicalStructProvider = ([initialNodes, initialContainers]) => {
     let containers = _.map(initialContainers, _.cloneDeep);
     let nodeClusters = [{ uuid: "clusterid", name: "" }];

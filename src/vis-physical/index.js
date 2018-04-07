@@ -109,9 +109,9 @@ function render ({root}) {
       .select('.node-cluster-meta')
       .html(({name,state = '', node_type = '', region = ''}) => {
 
-    // This is a HORRIBLE hack
-    // but I don't wanna fetch nodeTypes from the API as from now
-    var displayType = node_type.split('/')[4] || ''; // horrible
+  // This is a HORRIBLE hack
+  // but I don't wanna fetch nodeTypes from the API as from now
+  var displayType = node_type.split('/')[4] || ''; // horrible
   var displayRegion = region.split('/')[5] || ''; // horrible
 
   switch(displayType){
@@ -125,8 +125,8 @@ function render ({root}) {
 node
     .select('.node-meta')
     .attr('name',(d) => _.kebabCase(d.name))
-.attr('data-state',(d) => _.kebabCase(d.state))
-.html((d) => d.name);
+    .attr('data-state',(d) => _.kebabCase(d.state))
+    .html((d) => d.name);
 
 node
     .select('.node-content')
@@ -134,8 +134,8 @@ node
 
 container
     .classed('foreign', (d) => !d.state)
-.attr('tag',(d) => _.kebabCase(d.tag)).html((d) => d.tag)
-.attr('data-state',(d) => _.kebabCase(d.state))
+    .attr('tag',(d) => _.kebabCase(d.tag)).html((d) => d.tag)
+    .attr('data-state',(d) => _.kebabCase(d.state))
 
 
 container.on('mouseenter',null);
