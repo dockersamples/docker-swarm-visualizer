@@ -72,7 +72,7 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
                 var dt = new Date(cloned.UpdatedAt);
                 var color = stringToColor(cloned.ServiceID);
                 let serviceName = cloned.ServiceName;
-                let imageNameRegex = /((.*?)??\/?([^/.:]*?)\/?([^/]+))\:([^/]+)\@([^/]+)?$/;
+                let imageNameRegex = /((.*?)??\/?([^/.:]*?)\/?([^/:]+))\:?([^/\@]+)?\@?([^/]+)?$/;
                 let imageNameMatches = imageNameRegex.exec(cloned.Spec.ContainerSpec.Image);
                 let tagName = imageNameMatches[5];
                 let dateStamp = (dt.getFullYear()) + "-" + ('0' + (dt.getMonth() + 1)).slice(-2) + "-" + ('0' + dt.getDate()).slice(-2) + " " + ('0' + dt.getHours()).slice(-2) + ":" + ('0' + dt.getMinutes()).slice(-2);
