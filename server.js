@@ -17,55 +17,53 @@ process.env.MS=ms
 var ctxRoot = process.env.CTX_ROOT || '/';
 
 if ( !ctxRoot.startsWith('/') ) {
-	ctxRoot = '/' + ctxRoot;
+    ctxRoot = '/' + ctxRoot;
 }
 
 if ( !ctxRoot.endsWith('/') ) {
-	ctxRoot = ctxRoot + '/';
+    ctxRoot = ctxRoot + '/';
 }
 
 app.use(ctxRoot, express.static('dist'));
 
 var server = app.listen(8080, function () {
     indexData = _.template(fs.readFileSync('index.tpl'))(process.env);
-
 });
 
 app.get(ctxRoot, function(req, res) {
-  res.send(indexData);
+    res.send(indexData);
 });
 
 if (process.env.DOCKER_HOST) {
-  console.log("Docker Host: " + process.env.DOCKER_HOST)
-}
-  if(process.env.DOCKER_HOST) {
-     try {
-	   dh = process.env.DOCKER_HOST.split(":");
-	   var docker_host = dh[0];
-	   var docker_port = dh[1];
-     }
-	 catch (err) {
-	   console.log(err.stack)
-     }
-	}
-  var cert_path;
-  if (process.env.DOCKER_TLS_VERIFY) {
-    if (process.env.DOCKER_CERT_PATH) {
-      cert_path = process.env.DOCKER_CERT_PATH;
-    } else {
-      cert_path = (process.env.HOME || process.env.USERPROFILE) + "/.docker"
+    console.log("Docker Host: " + process.env.DOCKER_HOST)
+
+    try {
+        dh = process.env.DOCKER_HOST.split(":");
+        var docker_host = dh[0];
+        var docker_port = dh[1];
+    } catch (err) {
+        console.log(err.stack)
     }
-  }
+}
 
-  var wss = new WebSocketServer({server: server});
+var cert_path;
+if (process.env.DOCKER_TLS_VERIFY) {
+    if (process.env.DOCKER_CERT_PATH) {
+        cert_path = process.env.DOCKER_CERT_PATH;
+    } else {
+        cert_path = (process.env.HOME || process.env.USERPROFILE) + "/.docker"
+    }
+}
 
-  app.get(ctxRoot + 'apis/*', function(req, response) {
-      var path = req.params[0];
-      var jsonData={};
-      var options = {
-		  path: ('/' + path),
-		  method: 'GET'
-	  }
+var wss = new WebSocketServer({server: server});
+
+app.get(ctxRoot + 'apis/*', function(req, response) {
+    var path = req.params[0];
+    var jsonData={};
+    var options = {
+        path: ('/' + path),
+        method: 'GET'
+    }
 
     var request = http.request;
 
@@ -86,19 +84,18 @@ if (process.env.DOCKER_HOST) {
     }
 
     var req = request(options, (res) => {
-      var data = '';
-      res.on('data', (chunk) => {
-        data += chunk;
-      });
-      res.on('end', () => {
-        jsonData['objects'] = JSON.parse(data.toString());
-        response.json(jsonData);
-      });
+        var data = '';
+        res.on('data', (chunk) => {
+            data += chunk;
+        });
+        res.on('end', () => {
+            jsonData['objects'] = JSON.parse(data.toString());
+            response.json(jsonData);
+        });
     });
     req.on('error', (e) => {
-      console.log(`problem with request: ${e.message}`);
-      console.log(e.stack);
+        console.log(`problem with request: ${e.message}`);
+        console.log(e.stack);
     });
-      req.end();
-
-  });
+    req.end();
+});
