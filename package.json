@@ -48,7 +48,7 @@
     "express": "^4.13.3",
     "less": "^2.5.3",
     "less-loader": "^2.0.0",
-    "lodash": "^4.17.5",
+    "lodash": "^3.10.1",
     "normalize.css": "^3.0.3",
     "request": "^2.65.0",
     "superagent": "3.7.0",
