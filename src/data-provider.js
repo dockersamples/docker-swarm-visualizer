@@ -107,10 +107,10 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
             let { uuid, node } = container;
             let [nodeUuid] = uuidRegExp.exec(node);
             _.find(root, (cluster) => {
-                let node = _.findWhere(cluster.children, { uuid: nodeUuid });
+                let node = _.find(cluster.children, { uuid: nodeUuid });
                 if (!node) return;
 
-                let target = _.findWhere(node.children, { uuid }) || {};
+                let target = _.find(node.children, { uuid }) || {};
                 if (!target) return;
 
                 Object.assign(target, container);
@@ -138,7 +138,7 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
         },
 
         updateNodeCluster = (nodeCluster) => {
-            var currentCluster = _.findWhere(root, { uuid: nodeCluster.uuid });
+            var currentCluster = _.find(root, { uuid: nodeCluster.uuid });
             Object.assign(currentCluster, nodeCluster);
         },
 
@@ -146,7 +146,7 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
             let cloned = Object.assign({}, node);
             cloned.children = [];
             let clusterUuid = "clusterid";
-            let cluster = _.findWhere(root, { uuid: clusterUuid });
+            let cluster = _.find(root, { uuid: clusterUuid });
             if (cluster) cluster.children.push(cloned);
         },
         updateNode = (node, state, spec) => {
