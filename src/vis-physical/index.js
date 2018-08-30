@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import { uuidRegExp, capitalize } from '../utils/helpers';
 import { filterContainers, filterOnLoad } from "../utils/filter-containers";
+import { filterNodes, filterNodesOnLoad } from "../utils/filter-nodes";
 
 var { innerWidth:W, innerHeight:H } = window;
 
@@ -25,6 +26,17 @@ let filterInput = filterDiv.append('input')
 
 filterInput.on('keyup', filterContainers);
 filterOnLoad();
+
+let filterNodesDiv = wrapper.append('div')
+    .attr('id', 'filter-nodes-wrapper');
+
+let filterNodesInput = filterNodesDiv.append('input')
+    .attr('id', 'filter-nodes')
+    .attr('placeholder', 'filter nodes on labels');
+
+filterNodesInput.on('keyup', filterNodes);
+filterNodesOnLoad();
+
 
 function removeVis() {
   cluster = wrapper.selectAll('.node-cluster')

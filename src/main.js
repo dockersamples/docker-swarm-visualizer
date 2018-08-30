@@ -39,6 +39,15 @@ tabPhysical.addEventListener('click', () => {
     filterDiv.classList.add('hide');
     filterDiv.classList.remove('show');
   }
+  filterDiv = document.querySelector('#filter-nodes-wrapper');
+  if (filterDiv.classList.value.indexOf('hide') >= 0) {
+    filterDiv.classList.remove('hide');
+    filterDiv.classList.add('show');
+  }
+  else {
+    filterDiv.classList.add('hide');
+    filterDiv.classList.remove('show');
+  }
 });
 
 /* Enable polling */
