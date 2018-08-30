@@ -47,7 +47,9 @@ $ docker service create \
 
 ## Running on ARM
 
-[@alexellisuk](https://twitter.com/alexellisuk) has pushed an image to the Docker Hub as `alexellis2/visualizer-arm:latest` it will run the code on an ARMv6 or ARMv7 device such as the Raspberry Pi.
+### ARM32
+
+[@alexellisuk](https://twitter.com/alexellisuk) has pushed an image to the Docker Hub as `alexellis2/visualizer-arm:latest` it will run the code on an ARMv6 or ARMv7 device such as the Raspberry Pi 1 and 2 (up to RPi2 version 1.1).
 
 ```
 $ docker service create \
@@ -69,6 +71,21 @@ $ docker build -f Dockerfile.arm -t visualizer-arm:latest .
 > Make sure you do this on a Raspberry Pi directly.
 
 [View on Docker Hub](https://hub.docker.com/r/alexellis2/visualizer-arm/tags/)
+
+### ARM64
+
+Similarly, [@ikluft](https://github.com/ikluft) pushed an image to Docker Hub as `ikluft/visualizer-arm64v8` for arm64v8 architecture machines such as the Raspberry Pi 3, as well as Raspberry Pi 2 version 1.2 (Oct 2016) and later.
+
+```
+$ docker service create \
+  --name=viz \
+  --publish=8080:8080/tcp \
+  --constraint=node.role==manager \
+  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+  ikluft/visualizer-arm64v8:latest
+```
+
+To rebuild the image or inspect the source it was made from see [its entry on Docker Hub](https://hub.docker.com/r/ikluft/visualizer-arm64v8/) or the [GitHub repo forked for this fix](https://github.com/ikluft/docker-swarm-visualizer).
 
 ## Running on Windows
 
@@ -98,7 +115,7 @@ docker run -d -p 8080:8080 -e DOCKER_HOST=${ip}:2375 --name=visualizer stefansch
 
 To work with a TLS secured Docker engine on Windows, set the environment variable `DOCKER_TLS_VERIFY` and
 bind mount the TLS certificates into the container.
- 
+
 ```
 $ip=(Get-NetIPAddress -AddressFamily IPv4 `
    | Where-Object -FilterScript { $_.InterfaceAlias -Eq "vEthernet (HNS Internal NIC)" } `
