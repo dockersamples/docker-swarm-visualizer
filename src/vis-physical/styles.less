@@ -230,18 +230,34 @@
   100% { opacity: 1; transform: scale(1); max-height: 500px; }
 }
 
-#vis-physical .container.hide, #vis-physical .node.hide {
+#vis-physical .container.hide{
   animation: hide .5s forwards;
 }
 
-#vis-physical .container.show, #vis-physical .node.show {
+#vis-physical .container.show {
   animation: show .5s forwards;
 }
 
-#filter-wrapper.hide, #filter-nodes-wrapper.hide {
+#filter-wrapper.hide,  {
   animation: hide .5s forwards;
 }
 
-#filter-wrapper.show, #filter-nodes-wrapper.show {
+#filter-wrapper.show {
   animation: show .5s forwards;
+}
+
+#vis-physical .node.hide {
+  display: none;
+}
+
+#vis-physical .node.show {
+  display: block;
+}
+
+#filter-nodes-wrapper.hide {
+  display: none;
+}
+
+#filter-nodes-wrapper.show {
+  display: block;
 }

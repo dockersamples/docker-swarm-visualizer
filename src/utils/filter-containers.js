@@ -2,7 +2,8 @@ let filterTimeout;
 
 function filterTimeoutCallback() {
   let newHistory = encodeURI(document.querySelector('#filter').value);
-  history.pushState({}, '', '?filter=' + newHistory);
+  let newHistoryNodes = encodeURI(document.querySelector('#filter-nodes').value);
+  history.pushState({}, '', '?filter=' + newHistory + '&filterNodes=' + newHistoryNodes);
 }
 
 function filterHistory() {

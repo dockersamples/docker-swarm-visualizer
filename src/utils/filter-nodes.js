@@ -1,8 +1,9 @@
 let filterNodesTimeout;
 
 function filterNodesTimeoutCallback() {
-  let newHistory = encodeURI(document.querySelector('#filter-nodes').value);
-  history.pushState({}, '', '?filterNodes=' + newHistory);
+  let newHistory = encodeURI(document.querySelector('#filter').value);
+  let newHistoryNodes = encodeURI(document.querySelector('#filter-nodes').value);
+  history.pushState({}, '', '?filter=' + newHistory + '&filterNodes=' + newHistoryNodes);
 }
 
 function filterNodesHistory() {
@@ -28,15 +29,20 @@ export function filterNodes() {
   for (let i = 0; i < nodes.length; i++) {
 
     // Get node title.
-    let spanText = nodes[i].querySelector('.labelarea').querySelector('span').innerHTML;
+    let spanText = nodes[i].querySelector('.labelarea').querySelectorAll('span');
 
     // Define hidden by default.
     let hide = true;
 
     // Iterate through each word, show if any are found.
     for (let j = 0; j < filterNodesValues.length; j++) {
-      if (spanText.indexOf(filterNodesValues[j]) >= 0) {
-        hide = false;
+      for(let k = 0; k < spanText.length; k++) {
+        if (spanText[k].innerHTML.indexOf(filterNodesValues[j]) >= 0) {
+          hide = false;
+          break;
+        }
+      }
+      if(!hide) {
         break;
       }
     }
