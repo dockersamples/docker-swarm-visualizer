@@ -1,5 +1,5 @@
 #Latest version of node tested on.
-FROM arm64v8/node:8.11-alpine AS dist
+FROM arm64v8/node:8.12-alpine AS dist
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ ADD . /app
 RUN npm run dist
 
 
-FROM arm64v8/node:8.11-alpine
+FROM arm64v8/node:8.12-alpine
 
 WORKDIR /app
 ADD ./cfg/* /app/cfg/
