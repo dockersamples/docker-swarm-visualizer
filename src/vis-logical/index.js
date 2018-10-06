@@ -26,7 +26,7 @@ function calculateLinks(services){
 
     links.forEach((link,i) => {
       const [uuid] = uuidRegExp.exec(link.from_service);
-      const source = _.findWhere(services,{ uuid });
+      const source = _.find(services,{ uuid });
       if(!source) return;
       serviceLinks.push({ source,target });
     });
@@ -179,9 +179,9 @@ function restart(){
 
 export default {
   add(services){
-    console.log('CREATE', _.pluck(services,'name'));
+    console.log('CREATE', _.map(services,'name'));
     var newServices = _.filter(
-      services,({uuid}) => !!!_.findWhere(NODES,{uuid})
+      services,({uuid}) => !!!_.find(NODES,{uuid})
     );
 
     NODES.push(...newServices);
@@ -191,7 +191,7 @@ export default {
   update(service){
     console.log('UPDATE', service.name);
     let {uuid} = service;
-    let target = _.findWhere(NODES,{ uuid }) || {};
+    let target = _.find(NODES,{ uuid }) || {};
     Object.assign(target,service);
     LINKS = calculateLinks(NODES);
     restart();
