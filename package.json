@@ -16,7 +16,7 @@
     "start": "node server.js",
     "test": "karma start"
   },
-  "repository": "https://github.com/manomarks/docker-swarm-visualizer",
+  "repository": "https://github.com/dockersamples/docker-swarm-visualizer",
   "keywords": ["Docker","Swarm","D3","Node Visualization"],
   "contributors": [{"name": "Francisco Miranda", "name": "Mano Marks"}],
   "devDependencies": {
