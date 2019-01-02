@@ -87,7 +87,7 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
                     "<br/> tag : " + (tagName ? tagName : "latest") +
                     "<br/>" + (cloned.Spec.ContainerSpec.Args ? " cmd : " + cloned.Spec.ContainerSpec.Args + "<br/>" : "") +
                     " updated : " + dateStamp +
-                    "<br/>" + cloned.Status.ContainerStatus.ContainerID +
+                    "<br/>" + (cloned.Status.ContainerStatus? cloned.Status.ContainerStatus.ContainerID : "null") +
                     "<br/> state : " + startState +
                     "</div>";
 
@@ -207,7 +207,8 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
             for (let container of containers) {
                 let contNodeId = container.NodeID;
                 let service = _.find(services, function(o) { return o.ID == container.ServiceID; });
-                container.ServiceName = service.Spec.Name;
+                
+		container.ServiceName = service? service.Spec.Name : "null";
                 for (var i = 0, iLen = nodes.length; i < iLen; i++) {
                     if (nodes[i].ID == contNodeId) {
                         addContainer(container);
