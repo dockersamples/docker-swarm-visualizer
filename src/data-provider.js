@@ -1,5 +1,6 @@
 import EventEmitter from 'eventemitter3';
 import _ from 'lodash';
+import padStart from 'string.prototype.padstart';
 import { uuidRegExp } from './utils/helpers';
 
 import {
@@ -75,7 +76,7 @@ let physicalStructProvider = ([initialNodes, initialContainers]) => {
                 let imageNameRegex = /([^/]+?)(\:([^/]+))?$/;
                 let imageNameMatches = imageNameRegex.exec(cloned.Spec.ContainerSpec.Image);
                 let tagName = imageNameMatches[3];
-                let dateStamp = dt.getDate() + "/" + (dt.getMonth() + 1) + " " + dt.getHours() + ":" + dt.getMinutes();
+                let dateStamp = dt.getDate() + "/" + (dt.getMonth() + 1) + " " + dt.getHours() + ":" + padStart(dt.getMinutes().toString(), 2, "0");
                 let startState = cloned.Status.State;
 
 
