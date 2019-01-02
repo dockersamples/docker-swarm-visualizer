@@ -45,6 +45,16 @@ $ docker service create \
   dockersamples/visualizer
 ```
 
+## Supported architectures
+
+The main `dockersamples/visualizer` image supports **linux/amd64**.
+
+**For armhf**, there is a pre-built image available. See [Running on ARM](#running-on-arm).
+
+**For Windows**, there is a separate `Dockerfile.windows` and image. See [Running on Windows](#running-on-windows).
+
+**Missing your architecture?** See [Building a custom image](#building-a-custom-image).
+
 ## Running on ARM
 
 [@alexellisuk](https://twitter.com/alexellisuk) has pushed an image to the Docker Hub as `alexellis2/visualizer-arm:latest` it will run the code on an ARMv6 or ARMv7 device such as the Raspberry Pi.
@@ -63,7 +73,7 @@ $ docker service create \
 If you would like to build the image from source run the following command:
 
 ```
-$ docker build -f Dockerfile.arm -t visualizer-arm:latest .
+$ docker build -t visualizer-arm:latest .
 ```
 
 > Make sure you do this on a Raspberry Pi directly.
@@ -107,7 +117,21 @@ $ip=(Get-NetIPAddress -AddressFamily IPv4 `
 docker run -d -p 8080:8080 -e DOCKER_HOST=${ip}:2376 -e DOCKER_TLS_VERIFY=1 -v "$env:USERPROFILE\.docker:C:\Users\ContainerAdministrator\.docker" --name=visualizer stefanscherer/visualizer-windows
 ```
 
-TODO:
+## Building a custom image
+*When building for Windows, see [Running on Windows](#running-on-windows)*.
+
+To build an up-to-date image for any architecture supported by [node:8-alpine](https://hub.docker.com/_/node/) (currently `amd64`, `arm32v6`, `arm32v7`, `arm64v8`, `i386`, `ppc64le` and `s390x`), execute the following command on a device of your target architecture:
+```
+$ docker build -t visualizer-custom:latest .
+```
+
+Afterwards you can start visualizer by using any of the commands stated [above](#docker-swarm-visualizer). Just replace `dockersamples/visualizer` with `visualizer-custom`. For example:
+```
+$ docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock visualizer-custom
+```
+
+
+## TODO:
 * Take out or fix how dist works
 * Comment much more extensively
 * Create tests and make them work better
