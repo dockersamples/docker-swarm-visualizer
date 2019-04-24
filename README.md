@@ -143,6 +143,8 @@ Authorization: Bearer <token>
 
 To active Visualizer Auth set ASK_CREDENTIALS=true in your .env file
 
+![Auth Page](./auth.png)
+
 ## TODO:
 * Take out or fix how dist works
 * Comment much more extensively

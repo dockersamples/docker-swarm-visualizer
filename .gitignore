@@ -40,3 +40,4 @@ jspm_packages
 *.sh
 *.iml
 
+.env
