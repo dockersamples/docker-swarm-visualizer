@@ -130,6 +130,18 @@ Afterwards you can start visualizer by using any of the commands stated [above](
 $ docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock visualizer-custom
 ```
 
+## Visualizer with basic auth 
+Now, Visualizer has a basic auth. To give more data protection for your environment.
+
+Data Access can be made by Front-end using Username and Password check default credentials in src/controller/user.js
+Or set DEFAULT_USERNAME and DEFAULT_PASSWORD in your .env file.
+
+You can also use JWT Authentication sending POST Request to */auth* with username and password body, and use Token for API Requests.
+
+For API Requests using Token you need to use header:
+Authorization: Bearer <token> 
+
+To active Visualizer Auth set ASK_CREDENTIALS=true in your .env file
 
 ## TODO:
 * Take out or fix how dist works
