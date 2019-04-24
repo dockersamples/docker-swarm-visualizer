@@ -13,7 +13,7 @@
     "serve": "npm run serve:dev",
     "serve:dev": "node create-index.js && node server-dev.js --env=dev",
     "serve:dist": "node create-index.js && node server-dev.js --env=dist",
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "karma start"
   },
   "repository": "https://github.com/dockersamples/docker-swarm-visualizer",
