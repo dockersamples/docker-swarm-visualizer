@@ -20,21 +20,11 @@ var User = require("./src/controller/user");
 process.env.MS = ms;
 var REMOVE_SENSITIVE_CONTENT = process.env.REMOVE_SENSITIVE_CONTENT || false;
 var ctxRoot = process.env.CTX_ROOT || "/";
+var getCtxRoot = require('./src/ctxRootHelper');
+ctxRoot = getCtxRoot(ctxRoot);
 
-
-if (!ctxRoot.startsWith("/")) {
-    ctxRoot = "/" + ctxRoot;
-}
-
-if (!ctxRoot.endsWith("/")) {
-    ctxRoot = ctxRoot + "/";
-}
 app.use(bodyParser.json());
-app.use(
-    bodyParser.urlencoded({
-        extended: true
-    })
-);
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(ctxRoot, express.static("dist"));
 
 app.set("view engine", "ejs");
@@ -58,7 +48,7 @@ app.get(ctxRoot, async (req, res) => {
     if (await User.authenticated(req)) {
         res.send(indexData);
     } else {
-        res.redirect("/auth");
+        res.redirect(ctxRoot+"auth");
     }
 });
 
@@ -155,8 +145,8 @@ app.get(ctxRoot + "apis/*", async (req, response) => {
     }
 });
 
-app.get("/auth", (req, res) => User.authPage(req, res));
-app.post("/auth", (req, res) => User.auth(req, res));
+app.get(ctxRoot+"auth", (req, res) => User.authPage(req, res));
+app.post(ctxRoot+"auth", (req, res) => User.auth(req, res));
 
 console.log("Docker Visualizer is Running");
 console.log(`Username: ${User.defaultUsername}, Password: ${User.defaultPassword}`);

@@ -13,7 +13,7 @@
         <div class="card">
         <div class="card-header"> <h5>Visualizer Credentials</h5> </div>
         <div class="card-body">
-            <form action="/auth" method="POST">
+            <form action="<%=PostUrl%>" method="POST">
                  <% if(formError) { %>
                     <div class="alert alert-danger"> 
                         <strong>Hey!</strong> You insert wrong credentials, try again.

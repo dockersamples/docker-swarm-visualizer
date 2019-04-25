@@ -20,6 +20,9 @@ FROM node:8-alpine
 WORKDIR /app
 ADD ./cfg/* /app/cfg/
 ADD ./src/* /app/src/
+ADD ./src/controller/* /app/src/controller/
+ADD ./src/views/login/* /app/src/views/login/
+ADD ./src/views/template/* /app/src/views/template/
 ADD ./create-index.js /app
 ADD ./index.tpl /app
 ADD ./server.js /app

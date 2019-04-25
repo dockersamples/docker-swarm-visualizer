@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
 const secret = 'wingardiumleviosaxx123'
 const pkg = require('../../package.json');
-
+const getCtxRoot = require('../ctxRootHelper');
+let CTX_ROOT = process.env.CTX_ROOT || '/';
+CTX_ROOT = getCtxRoot(CTX_ROOT);
 class User { 
 
     constructor() {
@@ -11,7 +13,8 @@ class User {
         this.AskCredentials = process.env.ASK_CREDENTIALS || "false"; 
         this.viewData = {
             logo: this.defaultLogo,
-            version: pkg.version
+            version: pkg.version,
+            PostUrl: CTX_ROOT + "auth" 
         }
     }
 
@@ -62,7 +65,7 @@ class User {
         if(!await this.authenticated(req)) {
             res.render('login/index', {username: '', password: '', formError: false, ...this.viewData})
         } else {
-            res.redirect('/');
+            res.redirect(CTX_ROOT);
         }
     }
 
@@ -70,7 +73,7 @@ class User {
         const { username, password, authtype } = req.body;
         if(authtype && authtype === "xablau") {
             if(this.searchUser(username, password, req)){
-                res.redirect('/')
+                res.redirect(CTX_ROOT)
             } else {
                 res.render('login/index', {username, password, formError: true, ...this.viewData})
             }
