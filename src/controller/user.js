@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = 'wingardiumleviosaxx123'
+const secret = process.env.SECRET || `RandomSecret_${new Date().getTime()}`; 
 const pkg = require('../../package.json');
 const getCtxRoot = require('../ctxRootHelper');
 let CTX_ROOT = process.env.CTX_ROOT || '/';

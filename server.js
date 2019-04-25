@@ -14,7 +14,6 @@ var WebSocketServer = WS.Server;
 var indexData;
 var app = express();
 var ms = process.env.MS || 5000;
-var secret = "wingardiumleviosaxx123";
 var express_session = require("express-session");
 var User = require("./src/controller/user");
 process.env.MS = ms;
@@ -32,7 +31,7 @@ app.set("views", "./src/views");
 
 app.use(
     express_session({
-        secret: secret,
+        secret: new Date().getTime(),
         resave: false,
         saveUninitialized: false,
         cookie: { httpOnly: true },
