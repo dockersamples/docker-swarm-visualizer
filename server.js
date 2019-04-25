@@ -31,7 +31,7 @@ app.set("views", "./src/views");
 
 app.use(
     express_session({
-        secret: new Date().getTime(),
+        secret: `Secret_${new Date().getTime()}`,
         resave: false,
         saveUninitialized: false,
         cookie: { httpOnly: true },
