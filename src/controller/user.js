@@ -18,15 +18,16 @@ class User {
         }
     }
 
-    searchUser(username = '', password = '', req) {
+    searchUser(username = '', password = '', req, needSession = false) {
         req.session.authenticated = false;
         req.session.username = '';
         req.session.password = '';
-
         if(username === this.defaultUsername && password === this.defaultPassword) {
-            req.session.authenticated = true;
-            req.session.username = username;
-            req.session.password = password;
+            if(needSession) {
+                req.session.authenticated = true;
+                req.session.username = username;
+                req.session.password = password;
+            }
             return true;
         }  
         return false;
@@ -72,7 +73,7 @@ class User {
     auth(req, res) { 
         const { username, password, authtype } = req.body;
         if(authtype && authtype === "xablau") {
-            if(this.searchUser(username, password, req)){
+            if(this.searchUser(username, password, req, true)) { 
                 res.redirect(CTX_ROOT)
             } else {
                 res.render('login/index', {username, password, formError: true, ...this.viewData})
@@ -87,7 +88,7 @@ class User {
                     res.send({auth});
                 })
             } else {
-                res.status(401).send({error: "Not Authorized"})
+                res.status(401).send({error: "User not found"})
             }
         }
     }
