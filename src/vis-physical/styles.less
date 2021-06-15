@@ -95,7 +95,9 @@
   }
 
   .node{
-    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin-bottom: 20px;
     margin-right: 10px;
     &:last-child{
@@ -181,6 +183,9 @@
   }
 
   .node-cluster-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     background: @gray-darker;
     border: 2px solid lighten(@gray-darker,8%);
     padding: 15px;
