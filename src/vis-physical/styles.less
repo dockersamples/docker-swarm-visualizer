@@ -98,7 +98,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 200px;
     margin-bottom: 20px;
     margin-right: 10px;
     &:last-child{
@@ -133,7 +132,7 @@
   .node-content{
     padding: 0 10px;
     display: flex;
-    flex-direction: column-reverse;
+    flex-wrap: wrap;
     background: @gray-darkerr;
     border: 2px solid lighten(@gray-darker,8%);
     min-height: 500px;
@@ -145,6 +144,7 @@
 
   .container {
     //height: 152px;
+    width: 200px;
     margin-bottom: 5px;
     margin-top: 5px;
     border-radius: 3px;
@@ -189,10 +189,11 @@
     background: @gray-darker;
     border: 2px solid lighten(@gray-darker,8%);
     padding: 15px;
+    display: flex;
     .clear();
   }
   .node-cluster-content:empty {
-     display: none;
+    display: none;
   }
 
   .node-cluster-meta{
