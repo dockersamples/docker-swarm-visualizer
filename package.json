@@ -33,7 +33,7 @@
     "minimist": "^1.2.0",
     "mocha": "^2.2.5",
     "null-loader": "^0.1.1",
-    "open": "0.0.5",
+    "open": "7.0.3",
     "react-hot-loader": "^1.2.9",
     "rimraf": "^2.4.3",
 	"string.prototype.padstart": "^3.0.0",
