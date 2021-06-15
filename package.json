@@ -25,7 +25,7 @@
     "chai": "^3.2.0",
     "copyfiles": "^0.2.1",
     "css-loader": "^0.16.0",
-    "eslint": "^1.2.1",
+    "eslint": "^6.8.0",
     "eslint-loader": "^1.0.0",
     "eslint-plugin-react": "^3.3.0",
     "file-loader": "^0.8.4",
