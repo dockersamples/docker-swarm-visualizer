@@ -1,32 +1,24 @@
 #Latest version of node tested on.
-FROM node:8-alpine AS dist
+FROM node:12-alpine AS dist
+
+
+# Tini is recommended for Node apps https://github.com/krallin/tini
+RUN apk add --no-cache tini
+ENTRYPOINT ["/sbin/tini", "--"]
 
 WORKDIR /app
 
 # Only run npm install if these files change.
-ADD ./package.json /app/package.json
+COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm ci
 
-# Add the rest of the sources
-ADD . /app
+# Add the rest of the source
+COPY . .
 
+# run webpack
 RUN npm run dist
-
-
-FROM node:8-alpine
-
-WORKDIR /app
-ADD ./cfg/* /app/cfg/
-ADD ./src/* /app/src/
-ADD ./create-index.js /app
-ADD ./index.tpl /app
-ADD ./server.js /app
-ADD ./healthcheck.js /app
-COPY --from=dist /app/dist/* /app/dist/
-COPY --from=dist /app/package.json /app/package.json
-RUN npm install
 
 # MS : Number of milliseconds between polling requests. Default is 1000.
 # CTX_ROOT : Context root of the application. Default is /
@@ -36,4 +28,4 @@ EXPOSE 8080
 
 HEALTHCHECK CMD node /app/healthcheck.js || exit 1
 
-CMD ["npm","start"]
+CMD ["node","server.js"]
